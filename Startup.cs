@@ -32,7 +32,7 @@ namespace Pishkhan
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var jwtTokenModel = new JwtTokenModel();
+            var jwtTokenModel = new JwtConfigModel();
 
             Configuration.GetSection("JwtToken").Bind(jwtTokenModel);
 
@@ -67,7 +67,7 @@ namespace Pishkhan
                 });
 
 
-            services.Configure<JwtTokenModel>(config => Configuration.GetSection("JwtToken").Bind(config));
+            services.Configure<JwtConfigModel>(config => Configuration.GetSection("JwtToken").Bind(config));
 
             services.AddMvc();
 

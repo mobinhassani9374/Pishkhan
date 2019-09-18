@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Pishkhan.Models
 {
-    public class JwtTokenModel
+    public class JwtConfigModel
     {
         public string Key { get; set; }
 

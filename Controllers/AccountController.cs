@@ -18,10 +18,10 @@ namespace Pishkhan.Controllers
     {
         private readonly SignInManager<AppIdentityUser> signInManager;
         private readonly UserManager<AppIdentityUser> userManager;
-        private readonly JwtTokenModel jwtTokenModel;
+        private readonly JwtConfigModel jwtTokenModel;
         public AccountController(SignInManager<AppIdentityUser> signInManager,
             UserManager<AppIdentityUser> userManager,
-            IOptions<JwtTokenModel> options)
+            IOptions<JwtConfigModel> options)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
