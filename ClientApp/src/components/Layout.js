@@ -1,16 +1,10 @@
 import React from 'react';
-import { Col, Grid, Row } from 'react-bootstrap';
-import NavMenu from './NavMenu';
+import '../docs/lib/font-awesome-4.7.0/css/font-awesome.min.css';
+import '../docs/lib/bootstrap/dist/css/bootstrap.min.rtl.css';
+import '../docs/fonts/font-fa.css';
+import '../docs/css/styles.css?v=0.0.1';
+import '../docs/css/override.css?v=0.0.1';
 
 export default props => (
-  <Grid fluid>
-    <Row>
-      <Col sm={3}>
-        <NavMenu />
-      </Col>
-      <Col sm={9}>
-        {props.children}
-      </Col>
-    </Row>
-  </Grid>
+  <div dir="rtl">{props.children}</div>
 );
