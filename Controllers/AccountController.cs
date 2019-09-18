@@ -55,7 +55,7 @@ namespace Pishkhan.Controllers
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtTokenModel.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(30));
+            var expires = DateTime.Now.AddDays(Convert.ToDouble(jwtTokenModel.AuthenticationTimeDay));
 
             var token = new JwtSecurityToken(
                 jwtTokenModel.Issuer,
