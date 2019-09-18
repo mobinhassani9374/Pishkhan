@@ -110,27 +110,6 @@
     font-style: normal;
 }
 
-@font-face {
-    font-family: "MyriadArabic";
-    src: url("./MyriadArabic/fonts/MyriadArabic-Regular.eot");
-    src: url("./MyriadArabic/fonts/MyriadArabic-Regular.eot?#iefix") format("embedded-opentype"),
-    url("./MyriadArabic/fonts/MyriadArabic-Regular.ttf") format("truetype"),
-    url("./MyriadArabic/fonts/MyriadArabic-Regular.woff") format("woff"),
-    url("./MyriadArabic/fonts/MyriadArabic-Regular.woff2") format("woff2");
-    font-weight: 500;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: MehdiHeydari;
-    font-style: normal;
-    font-weight: normal;
-    src: url('./AMehdiHeydari/AMehdiHeydari.eot');
-    src: url('./AMehdiHeydari/AMehdiHeydari.eot?#iefix') format('embedded-opentype'), 
-    url('./AMehdiHeydari/AMehdiHeydari.woff') format('woff'), 
-    url('./AMehdiHeydari/AMehdiHeydari.woff2') format('woff2'), 
-    url('./AMehdiHeydari/AMehdiHeydari.ttf') format('truetype');
-}
 
 @font-face {
     font-family: Rezvan;
@@ -159,24 +138,7 @@
     url('./AMitra/AMitra_1MRT-Bold.woff') format('woff'), 
     url('./AMitra/AMitra_1MRT-Bold.ttf') format('truetype');
 }
-@font-face {
-    font-family: BNazanin;
-    font-style: normal;
-    font-weight: normal;
-    src: url('./BNazanin/BNazanin.eot.eot');
-    src: url('./BNazanin/BNazanin.eot?#iefix') format('embedded-opentype'), 
-    url('./BNazanin/BNazanin.woff') format('woff'), 
-    url('./BNazanin/BNazanin.ttf') format('truetype');
-}
-@font-face {
-    font-family: BNazanin;
-    font-style: normal;
-    font-weight: bold;
-    src: url('./BNazanin/BNazaninBold.eot');
-    src: url('./BNazanin/BNazaninBold.eot?#iefix') format('embedded-opentype'), 
-    url('./BNazanin/BNazaninBold.woff') format('woff'), 
-    url('./BNazanin/BNazaninBold.ttf') format('truetype');
-}
+
 
 @font-face {
     font-family: FranklinGothicDemiCond;
