@@ -1,6 +1,8 @@
+using BotDetect.Web;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +71,12 @@ namespace Pishkhan
 
             services.Configure<JwtConfigModel>(config => Configuration.GetSection("JwtToken").Bind(config));
 
-            services.AddMvc();
+            // Comment the next line if your app is running on the .NET Core 2.0
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddMemoryCache(); // Adds a default in-memory 
+                                       // implementation of 
+                                       // IDistributedCache
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -98,6 +105,11 @@ namespace Pishkhan
             app.UseSpaStaticFiles();
 
             app.UseAuthentication();
+
+            // configure your application pipeline to use SimpleCaptcha middleware
+            app.UseSimpleCaptcha(Configuration.GetSection("BotDetect"));
+
+            
 
             app.UseMvc(routes =>
             {
