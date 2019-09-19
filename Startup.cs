@@ -106,10 +106,14 @@ namespace Pishkhan
 
             app.UseAuthentication();
 
-            // configure your application pipeline to use SimpleCaptcha middleware
+            //// configure your application pipeline to use SimpleCaptcha middleware
             app.UseSimpleCaptcha(Configuration.GetSection("BotDetect"));
-
+           
             
+           
+            //app.UseCaptcha(Configuration.GetSection("BotDetect"));
+
+
 
             app.UseMvc(routes =>
             {

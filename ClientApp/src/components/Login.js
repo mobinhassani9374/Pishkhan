@@ -9,7 +9,7 @@ export default function Login() {
    useEffect(()=>{
     captchaSettings.set({
         captchaEndpoint:
-          'https://localhost:5001/simple-captcha-endpoint.ashx'
+          'https://localhost:44359/simple-captcha-endpoint.ashx'
       });
    })
     return (
