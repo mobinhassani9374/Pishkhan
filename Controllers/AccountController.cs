@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using BotDetect.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -32,6 +33,20 @@ namespace Pishkhan.Controllers
         public async Task<IActionResult> Login([FromBody]Models.LoginModel loginModel)
         {
             if (!ModelState.IsValid) return StatusCode(406);
+
+            string userEnteredCaptchaCode = loginModel.UserEnteredCaptchaCode;
+            string captchaId = loginModel.CaptchaId;
+
+            // create a captcha instance to be used for the captcha validation
+            SimpleCaptcha yourFirstCaptcha = new SimpleCaptcha();
+            // execute the captcha validation
+            bool isHuman = yourFirstCaptcha.Validate(userEnteredCaptchaCode, captchaId);
+
+            if (isHuman == false)
+            {
+                return NotFound();
+            }
+
             var result = await signInManager.PasswordSignInAsync(loginModel.UserName, loginModel.Password, false, false);
 
             if (result.Succeeded)
