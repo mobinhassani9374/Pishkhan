@@ -19,3 +19,15 @@ body {
 .header .header__welcome {
     font-size: 11px;
 }
+
+#menu .profile .profile__name {
+    font-size: 15px;
+}
+
+#menu .profile .profile__desc {
+    font-size: 10px;
+}
+
+#menu .link .link__item a {
+    font-size: 11px;
+}
