@@ -31,3 +31,22 @@ body {
 #menu .link .link__item a {
     font-size: 11px;
 }
+
+.form-control {
+    font-size: 10px;
+}
+
+.btn-success.focus, .btn-success:focus , .btn-success.active.focus,
+ .btn-success.active:focus, .btn-success.active:hover, .btn-success:active.focus, 
+ .btn-success:active:focus, .btn-success:active:hover, .open>.dropdown-toggle.btn-success.focus, 
+ .open>.dropdown-toggle.btn-success:focus,
+ .open>.dropdown-toggle.btn-success:hover {
+    color: #fff;
+    background-color: #62cb31;
+    border-color: #62cb31;
+}
+
+.form-group > lable {
+    font-weight: 600;
+    font-size: 10px;
+}
