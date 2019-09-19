@@ -1,7 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { Captcha } from 'reactjs-captcha';
+import { captchaSettings } from 'reactjs-captcha';
 
 export default function Login() {
+   const [captcha, setCaptcha] = useState(0)
+
+   useEffect(()=>{
+    captchaSettings.set({
+        captchaEndpoint:
+          'https://localhost:5001/simple-captcha-endpoint.ashx'
+      });
+   })
     return (
         <div className="login">
             <div className="col-md-4 col-sm-6 col-xs-12">
@@ -20,6 +30,11 @@ export default function Login() {
                         <div className="form-group">
                             <label>رمز عبور را وارد کنید </label>
                             <input type="password" tabIndex="2" className="form-control" placeholder="رمز عبور" />
+                        </div>
+                        <div className="form-group">
+                            <Captcha captchaStyleName="yourFirstCaptchaStyle"
+                                ref={(captcha) => { captcha = captcha }} />
+                            <input id="yourFirstCaptchaUserInput" type="text" />
                         </div>
                         <div className="login__box__link">
                             <Link to="/register">ثبت نام</Link>
