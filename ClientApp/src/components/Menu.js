@@ -1,7 +1,28 @@
-import React from 'react'
+import React , {useEffect} from 'react'
 import profileImg from '../docs/img/profile.jpg';
 
 export default function Menu() {
+    useEffect(()=>{
+        resizePage()
+    })
+
+    window.onresize = function() {
+        resizePage()
+    }
+
+    const resizePage = () =>{
+        //console.log(event)
+        let width = window.innerWidth
+
+        if(width<767) {
+            document.body.classList.add('page-small');
+            document.body.classList.remove('hide-sidebar');
+          }
+          else {
+           document.body.classList.remove('page-small');
+           document.body.classList.remove('hide-sidebar');
+          }
+    }
     return (
         <aside id="menu">
             <div className="profile">
