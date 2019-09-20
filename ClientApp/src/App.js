@@ -4,10 +4,11 @@ import Layout from './components/Layout';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
+import PrivateRouter from './components/PrivateRouter';
 
 export default () => (
   <Layout>
-    <Route exact path='/' component={Home} />
+    <PrivateRouter exact path='/' component={Home} />
     <Route path='/Login' component={Login} />
     <Route path='/Register' component={Register} />
   </Layout>

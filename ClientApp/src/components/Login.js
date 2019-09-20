@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { Captcha } from 'reactjs-captcha';
 import { captchaSettings } from 'reactjs-captcha';
+import { useToasts } from 'react-toast-notifications'
 
 export default function Login() {
     useEffect(() => {
@@ -15,12 +16,15 @@ export default function Login() {
 
     const [inputs, setInputs] = useState({})
     const captcha = useRef();
+    const { addToast } = useToasts();
 
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(inputs)
         console.log(captcha.current.getUserEnteredCaptchaCode())
         console.log(captcha.current.getCaptchaId())
+        addToast('خطایی رخ داد ', { appearance: 'error' })
+        addToast('با موفقیت اضافه شد ', { appearance: 'success' })
     }
 
     const changeInputs = (event) => {
