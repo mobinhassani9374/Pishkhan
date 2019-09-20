@@ -1,7 +1,15 @@
+import jwtDecode from 'jwt-decode';
 export const isLogin=()=>{
-    let getToken = localStorage.getItem('token');
-    if(getToken!=null) {
+    let token = localStorage.getItem('token');
+    if(token!=null) {
+        try {
+          let decode = jwtDecode(token)
+        }
+        catch(error) {
+            console.log(error)
+            return false;
+        }
         return true
     }
-    return false;
+    return false
 }
