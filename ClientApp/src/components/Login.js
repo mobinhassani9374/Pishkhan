@@ -7,6 +7,12 @@ import { captchaSettings } from 'reactjs-captcha';
 import { useToasts } from 'react-toast-notifications'
 
 export default function Login() {
+
+    captchaSettings.set({
+        captchaEndpoint:
+            'https://localhost:5001/simple-captcha-endpoint.ashx'
+    });
+    
     useEffect(() => {
         captchaSettings.set({
             captchaEndpoint:
@@ -41,14 +47,14 @@ export default function Login() {
                                 <i className="fa fa-sign-in"></i>
                             </div>
                         </div>
-                        <div className="login__box__title">ورود به سایت </div>
+                        <div className="login__box__title">ورود به سایت </div>                       
                         <div className="form-group">
                             <label>نام کاربری را وارد کنید </label>
                             <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder="نام کاربری" />
                         </div>
                         <div className="form-group">
                             <label>رمز عبور را وارد کنید </label>
-                            <input type="password" name="password" required onChange={changeInputs} tabIndex="2" required className="form-control" placeholder="رمز عبور" />
+                            <input autoComplete="false" type="password" name="password" onChange={changeInputs} tabIndex="2" required className="form-control" placeholder="رمز عبور" />
                         </div>
                         <div className="form-group">
                             <Captcha captchaStyleName="yourFirstCaptchaStyle"
