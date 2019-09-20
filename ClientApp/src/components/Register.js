@@ -3,6 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Captcha, captchaSettings } from 'reactjs-captcha';
 import axios from 'axios';
 import {ToastsStore} from 'react-toasts';
+import LaddaButton, { XS, SLIDE_UP } from 'react-ladda';
 
 export default function Register() {
 
@@ -17,6 +18,7 @@ export default function Register() {
 
     const [inputs, setInputs] = useState({})
     const [isLogin, setIsLogin] = useState(false)
+    const [loading, setLoading] = useState(false)
     const captcha = useRef();
 
     const settingCaptcha = () => {
@@ -53,8 +55,10 @@ export default function Register() {
                 localStorage.setItem('token', response.data.data);
                 setIsLogin(true)
             }
+            setLoading(false)
         }).catch((error) => {
             ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
+            setLoading(false)
         })
     }
 
@@ -102,7 +106,18 @@ export default function Register() {
                                     <Link to="/login">ورود به سایت </Link>
                                 </div>
                                 <div className="form-group">
-                                    <button tabIndex="6" type="submit" className="btn btn-success btn-block">ثبت نام</button>
+                                <LaddaButton
+                                        loading={loading}
+                                        tabIndex="6"
+                                        data-color="#eee"
+                                        data-size={XS}
+                                        data-style={SLIDE_UP}
+                                        data-spinner-size={30}
+                                        data-spinner-color="#ddd"
+                                        data-spinner-lines={12}
+                                    >
+                                        ثبت نام
+                                    </LaddaButton>
                                 </div>
                             </form>
                         </div>
