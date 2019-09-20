@@ -54,7 +54,7 @@ export default function Register() {
                 setIsLogin(true)
             }
         }).catch((error) => {
-            console.log(error)
+            ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
         })
     }
 

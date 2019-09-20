@@ -46,6 +46,8 @@ export default function Login() {
             }
         }).catch((error) => {
             console.log(error)
+            ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
+
         })
     }
 
