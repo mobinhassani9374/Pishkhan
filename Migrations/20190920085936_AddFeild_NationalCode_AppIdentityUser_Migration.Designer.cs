@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pishkhan.Data;
 
 namespace Pishkhan.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190920085936_AddFeild_NationalCode_AppIdentityUser_Migration")]
+    partial class AddFeild_NationalCode_AppIdentityUser_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,29 +189,6 @@ namespace Pishkhan.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Pishkhan.Data.UserPhoneNumber", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(265);
-
-                    b.Property<string>("UserId")
-                        .HasMaxLength(450);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique();
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserPhoneNumbers");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Pishkhan.Data.AppIdentityRole")
@@ -251,14 +230,6 @@ namespace Pishkhan.Migrations
                 {
                     b.HasOne("Pishkhan.Data.AppIdentityUser")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Pishkhan.Data.UserPhoneNumber", b =>
-                {
-                    b.HasOne("Pishkhan.Data.AppIdentityUser", "User")
-                        .WithMany("PhoneNumbers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
