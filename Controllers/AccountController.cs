@@ -69,38 +69,32 @@ namespace Pishkhan.Controllers
             if (isHuman == false)
                 return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
 
-            try
+            // validation unique pjoneNumber and nationalCode
+            if (userManager.Users.Any(c => c.NationalCode.Equals(registerModel.NationalCode)))
+                return Ok(ServiceResult.Error("کد ملی متعلق به شخص دیگری است"));
+
+            if (userManager.Users.Any(c => c.PhoneNumber.Equals(registerModel.PhoneNumber)))
+                return Ok(ServiceResult.Error("شماره همراه متعلق به شخص دیگری است"));
+
+            var result = await userManager.CreateAsync(new AppIdentityUser
             {
-                var result = await userManager.CreateAsync(new AppIdentityUser
-                {
-                    NationalCode = registerModel.NationalCode,
-                    UserName = "mobinhassani",
-                    PhoneNumber = registerModel.PhoneNumber,
+                NationalCode = registerModel.NationalCode,
+                UserName = Guid.NewGuid().ToString(),
+                PhoneNumber = registerModel.PhoneNumber,
 
-                }, registerModel.Password);
+            }, registerModel.Password);
 
 
-                if (result.Succeeded)
-                {
-                    var appUser = await userManager.FindByNameAsync(registerModel.NationalCode);
+            if (result.Succeeded)
+            {
+                var appUser = await userManager.FindByNameAsync(registerModel.NationalCode);
 
-                    return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
-                }
-
-                var errors = result.Errors.Select(c => c.Description).ToList();
-
-                return Ok(ServiceResult.Error(errors));
+                return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
             }
 
-            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
-            {
-                var error = ex.InnerException as SqlException;
+            var errors = result.Errors.Select(c => c.Description).ToList();
 
-                if (error.Number == 2601)
-                    return Ok(ServiceResult.Error("کد ملی نمی تواند تکراری باشد"));
-            }
-
-            return Ok(ServiceResult.Error("در انجام عملیات خطایی رخ داد مجددا تلاش کنید"));
+            return Ok(ServiceResult.Error(errors));
         }
 
 
