@@ -78,6 +78,12 @@ namespace Pishkhan
                                        // implementation of 
                                        // IDistributedCache
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory
@@ -105,6 +111,8 @@ namespace Pishkhan
             app.UseSpaStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSession();
 
             //// configure your application pipeline to use SimpleCaptcha middleware
             app.UseSimpleCaptcha(Configuration.GetSection("BotDetect"));
