@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 import configureStore from './store/configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { ToastProvider } from 'react-toast-notifications'
+import { ToastsContainer, ToastsStore } from 'react-toasts';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
@@ -24,9 +24,10 @@ const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <ToastProvider autoDismissTimeout={5000} placement ={'bottom-left'}>
+      <div>
         <App />
-      </ToastProvider>
+        <ToastsContainer store={ToastsStore} />
+      </div>
     </ConnectedRouter>
   </Provider>,
   rootElement);

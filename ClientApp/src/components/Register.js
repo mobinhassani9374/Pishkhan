@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import { Captcha, captchaSettings } from 'reactjs-captcha';
-import { useToasts } from 'react-toast-notifications'
 import axios from 'axios';
+import {ToastsStore} from 'react-toasts';
 
 export default function Register() {
 
@@ -18,7 +18,6 @@ export default function Register() {
     const [inputs, setInputs] = useState({})
     const [isLogin, setIsLogin] = useState(false)
     const captcha = useRef();
-    const { addToast } = useToasts();
 
     const settingCaptcha = () => {
         captchaSettings.set({
@@ -45,8 +44,8 @@ export default function Register() {
         axios.post('/api/register', dataPost).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
-                response.data.errors.map((error) => {
-                    addToast(error, { appearance: 'error' })
+                response.data.errors.map((error) => {                
+                    ToastsStore.error(error)
                 })
                 captcha.current.reloadImage();
             }
