@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, Redirect } from 'react-router-dom';
-import { Captcha } from 'reactjs-captcha';
-import { captchaSettings } from 'reactjs-captcha';
+import { Captcha , captchaSettings } from 'reactjs-captcha';
 import { useToasts } from 'react-toast-notifications'
 import axios from 'axios';
 
@@ -40,6 +39,7 @@ export default function Login() {
                 response.data.errors.map((error) => {
                     addToast(error, { appearance: 'error' })
                 })
+                settingCaptcha();
             }
             else {
                 localStorage.setItem('token', response.data.data);
@@ -61,6 +61,7 @@ export default function Login() {
                 'https://localhost:5001/simple-captcha-endpoint.ashx'
         });
     }
+
     return (
         <div className="login">
             {
@@ -80,13 +81,13 @@ export default function Login() {
                                 </div>
                                 <div className="form-group">
                                     <label>رمز عبور را وارد کنید </label>
-                                    <input autoComplete="false" type="password" name="password" onChange={changeInputs} tabIndex="2" required className="form-control" placeholder="رمز عبور" />
+                                    <input autoComplete="false" type="password" name="password" onChange={changeInputs} required tabIndex="2" className="form-control" placeholder="رمز عبور" />
                                 </div>
                                 <div className="form-group">
                                     <Captcha captchaStyleName="loginCaptchaStyle"
                                         ref={captcha} />
                                     <label name="cap">کد امنیتی را وارد کنید </label>
-                                    <input id="loginCaptchaUserInput" tabIndex="3" placeholder="کد امنیتی" className="form-control" type="text" />
+                                    <input id="loginCaptchaUserInput" required tabIndex="3" placeholder="کد امنیتی" className="form-control" type="text" />
                                 </div>
                                 <div className="login__box__link">
                                     <Link to="/register">ثبت نام</Link>
