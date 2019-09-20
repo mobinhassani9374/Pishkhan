@@ -6,8 +6,16 @@
 
   <captchaStyles>
     <captchaStyle>
-      <name>yourFirstCaptchaStyle</name>
-      <userInputID>yourFirstCaptchaUserInput</userInputID>
+      <name>loginCaptchaStyle</name>
+      <userInputID>loginCaptchaUserInput</userInputID>
+
     </captchaStyle>
+
+    <captchaStyle>
+      <name>registerCaptchaStyle</name>
+      <userInputID>registerCaptchaUserInput</userInputID>
+
+    </captchaStyle>
+
   </captchaStyles>
 </botdetect>
