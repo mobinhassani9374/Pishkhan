@@ -10,13 +10,13 @@ export default function Login() {
 
     captchaSettings.set({
         captchaEndpoint:
-            'https://localhost:5001/simple-captcha-endpoint.ashx'
+            'https://localhost:44359/simple-captcha-endpoint.ashx'
     });
     
     useEffect(() => {
         captchaSettings.set({
             captchaEndpoint:
-                'https://localhost:5001/simple-captcha-endpoint.ashx'
+                'https://localhost:44359/simple-captcha-endpoint.ashx'
         });
     })
 
