@@ -8,7 +8,7 @@ export default function Register() {
 
     captchaSettings.set({
         captchaEndpoint:
-            'https://localhost:5001/simple-captcha-endpoint.ashx'
+            '/simple-captcha-endpoint.ashx'
     });
 
     useEffect(() => {
@@ -23,7 +23,7 @@ export default function Register() {
     const settingCaptcha = () => {
         captchaSettings.set({
             captchaEndpoint:
-                'https://localhost:5001/simple-captcha-endpoint.ashx'
+                '/simple-captcha-endpoint.ashx'
         });
     }
 
