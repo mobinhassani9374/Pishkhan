@@ -13,7 +13,7 @@ namespace Pishkhan.Data
 
     public class AppIdentityUser : IdentityUser
     {
-        public int Age { get; set; }
+        public string NationalCode { get; set; }
     }
 
     public class AppIdentityDbContext
@@ -22,5 +22,17 @@ namespace Pishkhan.Data
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)
         { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            //user
+            var user = builder.Entity<AppIdentityUser>();
+
+            user.Property(c => c.NationalCode).HasMaxLength(256);
+            user.HasIndex(c => c.NationalCode).IsUnique(true);
+            
+        }
     }
 }
