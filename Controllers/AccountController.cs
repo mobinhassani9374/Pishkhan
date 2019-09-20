@@ -79,7 +79,7 @@ namespace Pishkhan.Controllers
             var result = await userManager.CreateAsync(new AppIdentityUser
             {
                 NationalCode = registerModel.NationalCode,
-                UserName = Guid.NewGuid().ToString(),
+                UserName = registerModel.NationalCode,
                 PhoneNumber = registerModel.PhoneNumber,
 
             }, registerModel.Password);
