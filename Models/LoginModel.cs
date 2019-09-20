@@ -8,14 +8,16 @@ namespace Pishkhan.Models
 {
     public class LoginModel
     {
-        [Required()]
+        [Required(ErrorMessage = "نام کاربری نمی تواند فاقد مقدار باشد")]
         public string UserName { get; set; }
 
-        [Required()]
+        [Required(ErrorMessage = "رمز عبور نمی تواند فاقد مقدار باشد")]
         public string Password { get; set; }
 
+        [Required()]
         public string UserEnteredCaptchaCode { get; set; }
 
+        [Required()]
         public string CaptchaId { get; set; }
     }
 }

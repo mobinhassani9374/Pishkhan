@@ -34,6 +34,11 @@ namespace Pishkhan.Models
             return new ServiceResult() { IsSuccess = false, Errors = new List<string> { errorMessage } };
         }
 
+        public static ServiceResult Error(List<string> errorMessages)
+        {
+            return new ServiceResult() { IsSuccess = false, Errors = errorMessages };
+        }
+
         public static ServiceResult Okay(string message)
         {
             return new ServiceResult() { IsSuccess = true, Message = message };

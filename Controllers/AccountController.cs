@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -34,17 +35,13 @@ namespace Pishkhan.Controllers
         {
             if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
 
-            string userEnteredCaptchaCode = loginModel.UserEnteredCaptchaCode;
-            string captchaId = loginModel.CaptchaId;
-
             // create a captcha instance to be used for the captcha validation
             SimpleCaptcha yourFirstCaptcha = new SimpleCaptcha();
             // execute the captcha validation
-            bool isHuman = yourFirstCaptcha.Validate(userEnteredCaptchaCode, captchaId);
+            bool isHuman = yourFirstCaptcha.Validate(loginModel.UserEnteredCaptchaCode, loginModel.CaptchaId);
 
             if (isHuman == false)
                 return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
-
 
             var result = await signInManager.PasswordSignInAsync(loginModel.UserName, loginModel.Password, false, false);
 
@@ -56,6 +53,54 @@ namespace Pishkhan.Controllers
             }
 
             return Ok(ServiceResult.Error("کاربری یافت نشد"));
+        }
+
+        [HttpPost]
+        [Route("api/register")]
+        public async Task<IActionResult> Register([FromBody]RegisterModel registerModel)
+        {
+            if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
+
+            // create a captcha instance to be used for the captcha validation
+            SimpleCaptcha yourFirstCaptcha = new SimpleCaptcha();
+            // execute the captcha validation
+            bool isHuman = yourFirstCaptcha.Validate(registerModel.UserEnteredCaptchaCode, registerModel.CaptchaId);
+
+            if (isHuman == false)
+                return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
+
+            try
+            {
+                var result = await userManager.CreateAsync(new AppIdentityUser
+                {
+                    NationalCode = registerModel.NationalCode,
+                    UserName = "mobinhassani",
+                    PhoneNumber = registerModel.PhoneNumber,
+
+                }, registerModel.Password);
+
+
+                if (result.Succeeded)
+                {
+                    var appUser = await userManager.FindByNameAsync(registerModel.NationalCode);
+
+                    return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
+                }
+
+                var errors = result.Errors.Select(c => c.Description).ToList();
+
+                return Ok(ServiceResult.Error(errors));
+            }
+
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+                var error = ex.InnerException as SqlException;
+
+                if (error.Number == 2601)
+                    return Ok(ServiceResult.Error("کد ملی نمی تواند تکراری باشد"));
+            }
+
+            return Ok(ServiceResult.Error("در انجام عملیات خطایی رخ داد مجددا تلاش کنید"));
         }
 
 
