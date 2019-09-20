@@ -39,7 +39,7 @@ export default function Login() {
                 response.data.errors.map((error) => {
                     addToast(error, { appearance: 'error' })
                 })
-                settingCaptcha();
+                captcha.current.reloadImage();
             }
             else {
                 localStorage.setItem('token', response.data.data);
