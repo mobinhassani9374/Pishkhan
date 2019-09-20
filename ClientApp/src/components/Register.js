@@ -1,39 +1,114 @@
-import React  from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react'
+import { Link, Redirect } from 'react-router-dom';
+import { Captcha, captchaSettings } from 'reactjs-captcha';
+import { useToasts } from 'react-toast-notifications'
+import axios from 'axios';
 
 export default function Register() {
+
+    captchaSettings.set({
+        captchaEndpoint:
+            'https://localhost:5001/simple-captcha-endpoint.ashx'
+    });
+
+    useEffect(() => {
+        settingCaptcha();
+    })
+
+    const [inputs, setInputs] = useState({})
+    const [isLogin, setIsLogin] = useState(false)
+    const captcha = useRef();
+    const { addToast } = useToasts();
+
+    const settingCaptcha = () => {
+        captchaSettings.set({
+            captchaEndpoint:
+                'https://localhost:5001/simple-captcha-endpoint.ashx'
+        });
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        let userEnteredCaptchaCode = captcha.current.getUserEnteredCaptchaCode()
+
+        let captchaId = captcha.current.getCaptchaId()
+
+        var dataPost = {
+            userEnteredCaptchaCode,
+            captchaId,
+            nationalCode: inputs.nationalCode,
+            password: inputs.password,
+            confirmPassword: inputs.confirmPassword,
+            phoneNumber: inputs.phoneNumber,
+        }
+        axios.post('/api/register', dataPost).then((response) => {
+            console.log(response)
+            if (!response.data.isSuccess) {
+                response.data.errors.map((error) => {
+                    addToast(error, { appearance: 'error' })
+                })
+                settingCaptcha();
+            }
+            else {
+                localStorage.setItem('token', response.data.data);
+                setIsLogin(true)
+            }
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    const changeInputs = (event) => {
+        event.persist();
+        setInputs(inputs => ({ ...inputs, [event.target.name]: event.target.value }));
+    }
+
     return (
         <div className="login">
-            <div className="col-md-4 col-sm-6 col-xs-12">
-                <div className="login__box">
-                    <form>
-                        <div className="text-center">
-                            <div className="login__box__icon">
-                                <i className="fa fa-user"></i>
-                            </div>
+            {
+                isLogin ? <Redirect to="/" />
+                    : <div className="col-md-4 col-sm-6 col-xs-12">
+                        <div className="login__box">
+                            <form onSubmit={handleSubmit}>
+                                <div className="text-center">
+                                    <div className="login__box__icon">
+                                        <i className="fa fa-user"></i>
+                                    </div>
+                                </div>
+                                <div className="login__box__title">ثبت نام در سایت </div>
+                                <div className="form-group">
+                                    <label>کد ملی  را وارد کنید </label>
+                                    <input type="text" tabIndex="1" name="nationalCode" onChange={changeInputs} required className="form-control" placeholder="کد ملی " />
+                                </div>
+                                <div className="form-group">
+                                    <label>شماره همراه را وارد کنید </label>
+                                    <input type="text" tabIndex="2" name="phoneNumber" onChange={changeInputs} required className="form-control" placeholder="شماره همراه" />
+                                </div>
+                                <div className="form-group">
+                                    <label>رمز عبور را وارد کنید </label>
+                                    <input type="password" name="password" onChange={changeInputs} required tabIndex="3" className="form-control" placeholder="رمز عبور" />
+                                </div>
+                                <div className="form-group">
+                                    <label>تکرار رمز عبور را وارد کنید </label>
+                                    <input type="password" name="confirmPassword" onChange={changeInputs} required tabIndex="4" className="form-control" placeholder="تکرار رمز عبور" />
+                                </div>
+                                <div className="form-group">
+                                    <Captcha captchaStyleName="registerCaptchaStyle"
+                                        ref={captcha} />
+                                    <label name="cap">کد امنیتی را وارد کنید </label>
+                                    <input id="registerCaptchaUserInput" tabIndex="5" placeholder="کد امنیتی" className="form-control" type="text" />
+                                </div>
+                                <div className="login__box__link">
+                                    <Link to="/login">ورود به سایت </Link>
+                                </div>
+                                <div className="form-group">
+                                    <button tabIndex="6" type="submit" className="btn btn-success btn-block">ثبت نام</button>
+                                </div>
+                            </form>
                         </div>
-                        <div className="login__box__title">ثبت نام در سایت </div>
-                        <div className="form-group">
-                            <label>نام و نام خانوادگی را وارد کنید </label>
-                            <input type="text" tabIndex="1" className="form-control" placeholder="نام و نام خانوادگی" />
-                        </div>
-                        <div className="form-group">
-                            <label>ایمیل را وارد کنید </label>
-                            <input type="email" tabIndex="2" className="form-control" placeholder="ایمیل" />
-                        </div>
-                        <div className="form-group">
-                            <label>شماره تلفن را وارد کنید </label>
-                            <input type="email" tabIndex="3" className="form-control" placeholder="شماره تلفن" />
-                        </div>
-                        <div className="login__box__link">
-                            <Link to="/login">ورود به سایت </Link>
-                        </div>
-                        <div className="form-group">
-                            <button tabIndex="4" type="submit" className="btn btn-success btn-block">ثبت نام</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+            }
         </div>
     )
 }
