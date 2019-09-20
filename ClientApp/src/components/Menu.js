@@ -1,5 +1,6 @@
 import React , {useEffect} from 'react'
 import profileImg from '../docs/img/profile.jpg';
+import { Link } from 'react-router-dom';
 
 export default function Menu() {
     useEffect(()=>{
@@ -42,13 +43,10 @@ export default function Menu() {
                     </ul>
                 </li>
                 <li className="link__item">
-                    <a href="./login.html">صفحه لاگین</a>
+                    <Link to='/login'>صفحه لاگین</Link>            
                 </li>
                 <li className="link__item">
-                    <a href="./register.html">صفحه ثبت نام</a>
-                </li>
-                <li className="link__item">
-                    <a href="./notfound.html">صفحه  404</a>
+                    <Link to='/register'>صفحه ثبت نام</Link>
                 </li>
             </ul>
         </aside>

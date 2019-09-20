@@ -1,22 +1,37 @@
-import React, { useState , useEffect } from 'react'
+
+
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { Captcha } from 'reactjs-captcha';
 import { captchaSettings } from 'reactjs-captcha';
 
 export default function Login() {
-   const [captcha, setCaptcha] = useState(0)
+    useEffect(() => {
+        captchaSettings.set({
+            captchaEndpoint:
+                'https://localhost:5001/simple-captcha-endpoint.ashx'
+        });
+    })
 
-   useEffect(()=>{
-    captchaSettings.set({
-        captchaEndpoint:
-          'https://localhost:44359/simple-captcha-endpoint.ashx'
-      });
-   })
+    const [inputs, setInputs] = useState({})
+    const captcha = useRef();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(inputs)
+        console.log(captcha.current.getUserEnteredCaptchaCode())
+        console.log(captcha.current.getCaptchaId())
+    }
+
+    const changeInputs = (event) => {
+        event.persist();
+        setInputs(inputs => ({ ...inputs, [event.target.name]: event.target.value }));
+    }
     return (
         <div className="login">
             <div className="col-md-4 col-sm-6 col-xs-12">
                 <div className="login__box">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="text-center">
                             <div className="login__box__icon">
                                 <i className="fa fa-sign-in"></i>
@@ -25,16 +40,17 @@ export default function Login() {
                         <div className="login__box__title">ورود به سایت </div>
                         <div className="form-group">
                             <label>نام کاربری را وارد کنید </label>
-                            <input type="text" tabIndex="1" className="form-control" placeholder="نام کاربری" />
+                            <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder="نام کاربری" />
                         </div>
                         <div className="form-group">
                             <label>رمز عبور را وارد کنید </label>
-                            <input type="password" tabIndex="2" className="form-control" placeholder="رمز عبور" />
+                            <input type="password" name="password" required onChange={changeInputs} tabIndex="2" required className="form-control" placeholder="رمز عبور" />
                         </div>
                         <div className="form-group">
                             <Captcha captchaStyleName="yourFirstCaptchaStyle"
-                                ref={(captcha) => { captcha = captcha }} />
-                            <input id="yourFirstCaptchaUserInput" type="text" />
+                                ref={captcha} />
+                            <label name="cap">کد امنیتی را وارد کنید </label>
+                            <input id="yourFirstCaptchaUserInput" name="code" required onChange={changeInputs} placeholder="کد امنیتی" className="form-control" type="text" />
                         </div>
                         <div className="login__box__link">
                             <Link to="/register">ثبت نام</Link>
