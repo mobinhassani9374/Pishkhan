@@ -29,10 +29,10 @@ namespace Pishkhan.Controllers
             jwtTokenModel = options.Value;
         }
         [HttpPost]
-        [Route("login")]
+        [Route("api/login")]
         public async Task<IActionResult> Login([FromBody]Models.LoginModel loginModel)
         {
-            if (!ModelState.IsValid) return StatusCode(406);
+            if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
 
             string userEnteredCaptchaCode = loginModel.UserEnteredCaptchaCode;
             string captchaId = loginModel.CaptchaId;
@@ -43,19 +43,19 @@ namespace Pishkhan.Controllers
             bool isHuman = yourFirstCaptcha.Validate(userEnteredCaptchaCode, captchaId);
 
             if (isHuman == false)
-            {
-                return NotFound();
-            }
+                return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
+
 
             var result = await signInManager.PasswordSignInAsync(loginModel.UserName, loginModel.Password, false, false);
 
             if (result.Succeeded)
             {
                 var appUser = await userManager.FindByNameAsync(loginModel.UserName);
-                return Ok(GenerateJwtToken(appUser));
+
+                return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
             }
 
-            return NotFound();
+            return Ok(ServiceResult.Error("کاربری یافت نشد"));
         }
 
 
