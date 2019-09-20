@@ -1,10 +1,9 @@
-
-
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { Captcha } from 'reactjs-captcha';
 import { captchaSettings } from 'reactjs-captcha';
 import { useToasts } from 'react-toast-notifications'
+import axios from 'axios';
 
 export default function Login() {
 
@@ -12,7 +11,7 @@ export default function Login() {
         captchaEndpoint:
             'https://localhost:5001/simple-captcha-endpoint.ashx'
     });
-    
+
     useEffect(() => {
         captchaSettings.set({
             captchaEndpoint:
@@ -26,11 +25,30 @@ export default function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(inputs)
-        console.log(captcha.current.getUserEnteredCaptchaCode())
-        console.log(captcha.current.getCaptchaId())
-        addToast('خطایی رخ داد ', { appearance: 'error' })
-        addToast('با موفقیت اضافه شد ', { appearance: 'success' })
+
+        let userEnteredCaptchaCode = captcha.current.getUserEnteredCaptchaCode()
+       
+        let captchaId = captcha.current.getCaptchaId()
+        
+        var dataPost = {
+            userEnteredCaptchaCode,
+            captchaId,
+            userName: inputs.userName,
+            password: inputs.password
+        }
+        axios.post('/api/login',dataPost).then((response)=>{
+            console.log(response)
+            if(!response.data.isSuccess) {
+                response.data.errors.map((error)=>{
+                    addToast(error , { appearance: 'error' })
+                })
+            }
+        }).catch((error)=>{
+            console.log(error)
+        })
+        console.log(dataPost);
+
+        
     }
 
     const changeInputs = (event) => {
@@ -47,7 +65,7 @@ export default function Login() {
                                 <i className="fa fa-sign-in"></i>
                             </div>
                         </div>
-                        <div className="login__box__title">ورود به سایت </div>                       
+                        <div className="login__box__title">ورود به سایت </div>
                         <div className="form-group">
                             <label>نام کاربری را وارد کنید </label>
                             <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder="نام کاربری" />
@@ -60,7 +78,7 @@ export default function Login() {
                             <Captcha captchaStyleName="yourFirstCaptchaStyle"
                                 ref={captcha} />
                             <label name="cap">کد امنیتی را وارد کنید </label>
-                            <input id="yourFirstCaptchaUserInput" name="code" required onChange={changeInputs} placeholder="کد امنیتی" className="form-control" type="text" />
+                            <input id="yourFirstCaptchaUserInput" tabIndex="3" placeholder="کد امنیتی" className="form-control" type="text" />
                         </div>
                         <div className="login__box__link">
                             <Link to="/register">ثبت نام</Link>
@@ -68,7 +86,7 @@ export default function Login() {
                             {/* <a href="#">فراموشی رمز عبور</a> */}
                         </div>
                         <div className="form-group">
-                            <button tabIndex="3" type="submit" className="btn btn-success btn-block">ورود</button>
+                            <button tabIndex="4" type="submit" className="btn btn-success btn-block">ورود</button>
                         </div>
                     </form>
                 </div>
