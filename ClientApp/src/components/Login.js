@@ -11,12 +11,9 @@ export default function Login() {
         captchaEndpoint:
             'https://localhost:5001/simple-captcha-endpoint.ashx'
     });
-
+    
     useEffect(() => {
-        captchaSettings.set({
-            captchaEndpoint:
-                'https://localhost:5001/simple-captcha-endpoint.ashx'
-        });
+        settingCaptcha();
     })
 
     const [inputs, setInputs] = useState({})
@@ -56,6 +53,13 @@ export default function Login() {
     const changeInputs = (event) => {
         event.persist();
         setInputs(inputs => ({ ...inputs, [event.target.name]: event.target.value }));
+    }
+
+    const settingCaptcha = () => {
+        captchaSettings.set({
+            captchaEndpoint:
+                'https://localhost:5001/simple-captcha-endpoint.ashx'
+        });
     }
     return (
         <div className="login">

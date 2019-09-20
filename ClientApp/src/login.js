@@ -4,6 +4,7 @@ export const isLogin=()=>{
     if(token!=null) {
         try {
           let decode = jwtDecode(token)
+          console.log(decode)
         }
         catch(error) {
             console.log(error)

@@ -9,37 +9,37 @@ export default function main() {
                     <div className="row">
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>نام و نام خانوادگی خود را وارد کنید </lable>
+                                <lable name="label">نام و نام خانوادگی خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="نام و نام خانوادگی " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>نام پدر  خود را وارد کنید </lable>
+                                <lable name="label">نام پدر  خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="نام پدر  " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>کد ملی  خود را وارد کنید </lable>
+                                <lable name="label">کد ملی  خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="کد ملی  " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>ایمیل خود را وارد کنید </lable>
+                                <lable name="label">ایمیل خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="ایمیل " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>شماره تلفن ثابت خود را وارد کنید </lable>
+                                <lable name="label">شماره تلفن ثابت خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="شماره تلفن ثابت " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>شماره تلفن همراه خود را وارد کنید </lable>
+                                <lable name="label">شماره تلفن همراه خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="شماره تلفن همراه " />
                             </div>
                         </div>
@@ -57,37 +57,37 @@ export default function main() {
                     <div className="row">
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>نام و نام خانوادگی خود را وارد کنید </lable>
+                                <lable name="label">نام و نام خانوادگی خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="نام و نام خانوادگی " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>نام پدر  خود را وارد کنید </lable>
+                                <lable name="label">نام پدر  خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="نام پدر  " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>کد ملی  خود را وارد کنید </lable>
+                                <lable name="label">کد ملی  خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="کد ملی  " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>ایمیل خود را وارد کنید </lable>
+                                <lable name="label">ایمیل خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="ایمیل " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>شماره تلفن ثابت خود را وارد کنید </lable>
+                                <lable name="label">شماره تلفن ثابت خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="شماره تلفن ثابت " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>شماره تلفن همراه خود را وارد کنید </lable>
+                                <lable name="label">شماره تلفن همراه خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="شماره تلفن همراه " />
                             </div>
                         </div>
@@ -105,37 +105,37 @@ export default function main() {
                     <div className="row">
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>نام و نام خانوادگی خود را وارد کنید </lable>
+                                <lable name="label">نام و نام خانوادگی خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="نام و نام خانوادگی " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>نام پدر  خود را وارد کنید </lable>
+                                <lable name="label">نام پدر  خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="نام پدر  " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>کد ملی  خود را وارد کنید </lable>
+                                <lable name="label">کد ملی  خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="کد ملی  " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>ایمیل خود را وارد کنید </lable>
+                                <lable name="label">ایمیل خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="ایمیل " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>شماره تلفن ثابت خود را وارد کنید </lable>
+                                <lable name="label">شماره تلفن ثابت خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="شماره تلفن ثابت " />
                             </div>
                         </div>
                         <div className="col-md-4 col-sm-6">
                             <div className="form-group">
-                                <lable>شماره تلفن همراه خود را وارد کنید </lable>
+                                <lable name="label">شماره تلفن همراه خود را وارد کنید </lable>
                                 <input type="text" className="form-control" placeholder="شماره تلفن همراه " />
                             </div>
                         </div>
