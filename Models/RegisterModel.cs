@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pishkhan.ValidationAttributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,9 +10,11 @@ namespace Pishkhan.Models
     public class RegisterModel
     {
         [Required(ErrorMessage = "کد ملی نمی تواند فاقد مقدار باشد")]
+        [NationalCode(ErrorMessage ="ساختار کد ملی معتبر نمی باشد")]
         public string NationalCode { get; set; }
 
         [Required(ErrorMessage = "شماره همراه نمی تواند فاقد مقدار باشد")]
+        [PhoneNumber(ErrorMessage ="ساختار شماره همراه صحیح نمی باشد")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "رمز عبور نمی تواند فاقد مقدار باشد")]

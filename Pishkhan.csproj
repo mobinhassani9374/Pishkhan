@@ -16,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Captcha" Version="4.4.2" />
     <PackageReference Include="CAPTCHA.asp.net.core.on.legacy.net.frameworks" Version="4.4.2" />
+    <PackageReference Include="DNTPersianUtils.Core" Version="3.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
