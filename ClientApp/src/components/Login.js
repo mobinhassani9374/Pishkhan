@@ -11,7 +11,7 @@ export default function Login() {
         captchaEndpoint:
             'https://localhost:5001/simple-captcha-endpoint.ashx'
     });
-    
+
     useEffect(() => {
         settingCaptcha();
     })
@@ -83,10 +83,10 @@ export default function Login() {
                                     <input autoComplete="false" type="password" name="password" onChange={changeInputs} tabIndex="2" required className="form-control" placeholder="رمز عبور" />
                                 </div>
                                 <div className="form-group">
-                                    <Captcha captchaStyleName="yourFirstCaptchaStyle"
+                                    <Captcha captchaStyleName="loginCaptchaStyle"
                                         ref={captcha} />
                                     <label name="cap">کد امنیتی را وارد کنید </label>
-                                    <input id="yourFirstCaptchaUserInput" tabIndex="3" placeholder="کد امنیتی" className="form-control" type="text" />
+                                    <input id="loginCaptchaUserInput" tabIndex="3" placeholder="کد امنیتی" className="form-control" type="text" />
                                 </div>
                                 <div className="login__box__link">
                                     <Link to="/register">ثبت نام</Link>
