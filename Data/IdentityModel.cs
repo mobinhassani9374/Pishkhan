@@ -27,6 +27,8 @@ namespace Pishkhan.Data
         public virtual AppIdentityUser User { get; set; }
 
         public string UserId { get; set; }
+
+        public bool IsConfirm { get; set; }
     }
 
     public class AppIdentityDbContext
@@ -34,13 +36,23 @@ namespace Pishkhan.Data
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
             : base(options)
-        { }
+        {
+           
+        }
 
         public DbSet<UserPhoneNumber> UserPhoneNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<AppIdentityUser>().ToTable("Users","dbo");
+            builder.Entity<AppIdentityRole>().ToTable("Roles","dbo");
+            builder.Entity<IdentityUserClaim<string>>().ToTable("UserClaims","dbo");
+            builder.Entity<IdentityUserLogin<string>>().ToTable("UserLogins","dbo");
+            builder.Entity<IdentityUserRole<string>>().ToTable("UserRoles","dbo");
+            builder.Entity<IdentityUserToken<string>>().ToTable("UserTokens","dbo");
+            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims","dbo");
 
             //user
             var user = builder.Entity<AppIdentityUser>();
