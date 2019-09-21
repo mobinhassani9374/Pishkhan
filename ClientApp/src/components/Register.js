@@ -50,6 +50,9 @@ export default function Register() {
             phoneNumber: inputs.phoneNumber,
             userName: inputs.userName,
         }
+
+        setLoading(true);
+        
         axios.post('/api/register', dataPost).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
