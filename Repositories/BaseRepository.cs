@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pishkhan.Repositories
 {
-    public class BaseRepository<TEntity> where TEntity : class
+    public class BaseRepository<TEntity>: IBaseRepository where TEntity : class
     {
         protected readonly AppIdentityDbContext _context;
         public BaseRepository(AppIdentityDbContext context)
