@@ -20,6 +20,12 @@ namespace Pishkhan.Repositories
             _context.Add(entity);
             return Save();
         }
+
+        public IQueryable<TEntity> AsQueryable()
+        {
+            return _context.Set<TEntity>().AsQueryable();
+        }
+
         private ServiceResult Save()
         {
             if (_context.SaveChanges() > 0)
