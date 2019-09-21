@@ -24,6 +24,9 @@ export default {
       'national code': 'کد ملی ',
       'phone number': 'شماره تلفن',
       'confirm password': 'تکرار رمز عبور '
+    },
+    verify : {
+      'activation code ':'کد فعال سازی '
     }
   },
   // add other language to the object
