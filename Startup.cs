@@ -87,6 +87,12 @@ namespace Pishkhan
                 options.Cookie.HttpOnly = true;
             });
 
+            services.AddAntiforgery(options => 
+            {
+                options.HeaderName = "X-XSRF-TOKEN";
+                options.Cookie.Name = "MyAntiForgeryCookieName";
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // In production, the React files will be served from this directory

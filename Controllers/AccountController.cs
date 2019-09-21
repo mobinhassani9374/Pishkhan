@@ -37,6 +37,7 @@ namespace Pishkhan.Controllers
         }
         [HttpPost]
         [Route("api/login")]
+        [ValidateAntiForgeryToken()]
         public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
         {
             if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
@@ -71,6 +72,7 @@ namespace Pishkhan.Controllers
 
         [HttpPost]
         [Route("api/register")]
+        [ValidateAntiForgeryToken()]
         public async Task<IActionResult> Register([FromBody]RegisterModel registerModel)
         {
             if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
