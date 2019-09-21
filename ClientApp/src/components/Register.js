@@ -48,7 +48,7 @@ export default function Register() {
             password: inputs.password,
             confirmPassword: inputs.confirmPassword,
             phoneNumber: inputs.phoneNumber,
-            username: inputs.username,
+            userName: inputs.userName,
         }
         axios.post('/api/register', dataPost).then((response) => {
             console.log(response)
