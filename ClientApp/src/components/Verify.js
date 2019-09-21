@@ -45,7 +45,7 @@ export default function Verify(props) {
             if (!response.data.isSuccess) {
                 response.data.errors.map((error) => {
                     ToastsStore.error(error)
-                    if(error==='') {
+                    if(error==='کد فعالسازی منقضی شده است') {
                         setFail(true)
                     }
                 })
