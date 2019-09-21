@@ -5,7 +5,16 @@ import '../docs/fonts/font-fa.css';
 import '../docs/css/styles.css?v=0.0.1';
 import '../docs/css/override.css?v=0.0.2';
 import '../docs/css/ladda.min.css';
+import { useTranslation } from 'react-i18next';
 
-export default props => (
-  <div dir="rtl">{props.children}</div>
-);
+
+
+export default function Layout(props) {
+  const { t, i18n } = useTranslation(['home']);
+
+  i18n.changeLanguage('fa_IR');
+  
+  return (
+    <div dir={t('ltr')}>{props.children}</div>
+  )
+}

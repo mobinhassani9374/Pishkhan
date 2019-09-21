@@ -21,9 +21,6 @@ export default function Login() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
-    const { t, i18n } = useTranslation(['home']);
-
-    //i18n.changeLanguage('fa_IR');
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -85,7 +82,7 @@ export default function Login() {
                                         <i className="fa fa-sign-in"></i>
                                     </div>
                                 </div>
-                                <div className="login__box__title">{t('login')}</div>
+                                <div className="login__box__title">ورود به سایت</div>
                                 <div className="form-group">
                                     <label>نام کاربری را وارد کنید </label>
                                     <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder="نام کاربری" />

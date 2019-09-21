@@ -1,7 +1,7 @@
 export default {
     fa_IR: {
       home: {
-        'login': 'ورود به سایت ',
+        'ltr': 'rtl',
       }
     },
     // add other language to the object
