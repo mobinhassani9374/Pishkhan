@@ -7,9 +7,10 @@ namespace Pishkhan.SmsProvider
 {
     public class SmsService
     {
-        public void Send(string phoneNumber,string message)
+        public void Send(string phoneNumber, string message)
         {
             // code send sms here
+            System.IO.File.WriteAllText("verify.txt", message);
         }
     }
 }

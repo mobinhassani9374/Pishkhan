@@ -25,15 +25,18 @@ namespace Pishkhan.Controllers
         private readonly UserManager<AppIdentityUser> userManager;
         private readonly JwtConfigModel jwtTokenModel;
         private readonly UserPhoneNumberRepository _userPhoneNumberRepository;
+        private readonly SettingRepository _settingRepository;
         public AccountController(SignInManager<AppIdentityUser> signInManager,
             UserManager<AppIdentityUser> userManager,
             IOptions<JwtConfigModel> options,
-            UserPhoneNumberRepository userPhoneNumberRepository)
+            UserPhoneNumberRepository userPhoneNumberRepository,
+            SettingRepository settingRepository)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             jwtTokenModel = options.Value;
             _userPhoneNumberRepository = userPhoneNumberRepository;
+            _settingRepository = settingRepository;
         }
         [HttpPost]
         [Route("api/login")]
@@ -50,9 +53,9 @@ namespace Pishkhan.Controllers
             if (isHuman == false)
                 return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
 
-            var appUser = userManager.Users.Include(c=>c.PhoneNumbers).FirstOrDefault(c => c.UserName.Equals(loginModel.UserName)
-              || c.NationalCode.Equals(loginModel.UserName)
-              || c.PhoneNumbers.Any(i => i.PhoneNumber.Equals(loginModel.UserName)));
+            var appUser = userManager.Users.Include(c => c.PhoneNumbers).FirstOrDefault(c => c.UserName.Equals(loginModel.UserName)
+                || c.NationalCode.Equals(loginModel.UserName)
+                || c.PhoneNumbers.Any(i => i.PhoneNumber.Equals(loginModel.UserName)));
 
             if (appUser == null) return Ok(ServiceResult.Error("کاربری یافت نشد"));
 
@@ -122,7 +125,15 @@ namespace Pishkhan.Controllers
 
                 new SmsProvider.SmsService().Send(registerModel.PhoneNumber, $"کد فعالسازی شما : {activationCode}");
 
-                return Ok(ServiceResult.Okay("کد فعالسازی برای کاربر ارسال گردید"));
+                var verificationTime = _settingRepository.AsQueryable()
+                    .FirstOrDefault(c => c.Key.Equals(Enums.Setting.VerificationTime.ToString()));
+
+                int verificationTimeMin = 3;
+
+                if (verificationTime != null)
+                    verificationTimeMin = Convert.ToInt32(verificationTime.Value);
+
+                return Ok(ServiceResult<int>.Okay(verificationTimeMin));
             }
 
             var errors = result.Errors.Select(c => c.Description).ToList();
