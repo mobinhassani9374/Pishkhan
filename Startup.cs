@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Pishkhan.Data;
 using Pishkhan.Models;
+using Pishkhan.Repositories;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -74,6 +75,8 @@ namespace Pishkhan
             // Comment the next line if your app is running on the .NET Core 2.0
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            RepositoryInjection.Inject(services);
+
             services.AddMemoryCache(); // Adds a default in-memory 
                                        // implementation of 
                                        // IDistributedCache
@@ -116,9 +119,9 @@ namespace Pishkhan
 
             //// configure your application pipeline to use SimpleCaptcha middleware
             app.UseSimpleCaptcha(Configuration.GetSection("BotDetect"));
-           
-            
-           
+
+
+
             //app.UseCaptcha(Configuration.GetSection("BotDetect"));
 
 
