@@ -48,8 +48,7 @@ export default function Verify(props) {
                     if(error==='کد فعالسازی منقضی شده است') {
                         setFail(true)
                     }
-                })
-                
+                }) 
             }
             else {
                 localStorage.setItem('token', response.data.data);

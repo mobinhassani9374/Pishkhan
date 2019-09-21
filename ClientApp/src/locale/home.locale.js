@@ -26,7 +26,9 @@ export default {
       'confirm password': 'تکرار رمز عبور '
     },
     verify : {
-      'activation code ':'کد فعال سازی '
+      'activation code':'کد فعال سازی ',
+      'register' : 'ثبت نام',
+      're-activate activation code' : 'ارسال کد مجدد فعال سازی'
     }
   },
   // add other language to the object
