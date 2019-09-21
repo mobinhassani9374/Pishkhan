@@ -27,6 +27,8 @@ namespace Pishkhan.Data
         public virtual AppIdentityUser User { get; set; }
 
         public string UserId { get; set; }
+
+        public bool IsConfirm { get; set; }
     }
 
     public class AppIdentityDbContext
