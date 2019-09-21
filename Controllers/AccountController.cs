@@ -31,7 +31,7 @@ namespace Pishkhan.Controllers
         }
         [HttpPost]
         [Route("api/login")]
-        public async Task<IActionResult> Login([FromBody]Models.LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
         {
          
             if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
