@@ -31,11 +31,8 @@ export default function Verify(props) {
 
         if (fail) {
             return sendMessage()
-        }
 
-        let dataPost = {
-            activationCode: inputs.code,
-            phoneNumber: props.location.state.phoneNumber
+
         }
 
         let headers = {
@@ -43,6 +40,12 @@ export default function Verify(props) {
             'X-XSRF-TOKEN': Cookies.get('X-XSRF-TOKEN')
         }
 
+        let dataPost = {
+            activationCode: inputs.code,
+            phoneNumber: props.location.state.phoneNumber
+        }
+
+        setloading(true)
 
         axios.post('api/verify', dataPost, { headers: headers }).then((response) => {
             if (!response.data.isSuccess) {
@@ -54,9 +57,11 @@ export default function Verify(props) {
                 localStorage.setItem('token', response.data.data);
                 setIsLogin(true)
             }
+            setloading(false)
         }).catch((error) => {
             console.log(error)
             ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
+            setloading(false)
         })
 
     }
