@@ -50,3 +50,26 @@ body {
     font-weight: 600;
     font-size: 10px;
 }
+
+.toast  {
+    left:10px !important;
+    font-family: IRANSans !important; 
+    color: #fff !important;
+}
+
+.ladda-button {
+    direction: ltr;
+}
+
+.ladda-button[disabled], .ladda-button[disabled]:hover, .ladda-button[data-loading], .ladda-button[data-loading]:hover {
+    color: #fff;
+    background-color: #62cb31 !important;
+    border-color: #62cb31 !important;
+}
+
+.ladda-button[data-size=xs] , .ladda-button[data-size=xs]:hover {
+    width: 100%;
+    color: #fff;
+    background-color: #62cb31;
+    border-color: #62cb31;
+}

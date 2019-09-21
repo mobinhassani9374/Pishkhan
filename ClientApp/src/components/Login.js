@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, Redirect } from 'react-router-dom';
-import { Captcha , captchaSettings } from 'reactjs-captcha';
-import { useToasts } from 'react-toast-notifications'
+import { Captcha, captchaSettings } from 'reactjs-captcha';
 import axios from 'axios';
+import { ToastsStore } from 'react-toasts';
+import LaddaButton, { XS, SLIDE_UP } from 'react-ladda';
 
 export default function Login() {
 
@@ -17,8 +18,8 @@ export default function Login() {
 
     const [inputs, setInputs] = useState({})
     const [isLogin, setIsLogin] = useState(false)
+    const [loading, setLoading] = useState(false)
     const captcha = useRef();
-    const { addToast } = useToasts();
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -33,11 +34,14 @@ export default function Login() {
             userName: inputs.userName,
             password: inputs.password
         }
+
+        setLoading(true)
+
         axios.post('/api/login', dataPost).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
                 response.data.errors.map((error) => {
-                    addToast(error, { appearance: 'error' })
+                    ToastsStore.error(error)
                 })
                 captcha.current.reloadImage();
             }
@@ -45,8 +49,11 @@ export default function Login() {
                 localStorage.setItem('token', response.data.data);
                 setIsLogin(true)
             }
+            setLoading(false)
         }).catch((error) => {
             console.log(error)
+            ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
+            setLoading(false)
         })
     }
 
@@ -95,7 +102,18 @@ export default function Login() {
                                     {/* <a href="#">فراموشی رمز عبور</a> */}
                                 </div>
                                 <div className="form-group">
-                                    <button tabIndex="4" type="submit" className="btn btn-success btn-block">ورود</button>
+                                    <LaddaButton
+                                        loading={loading}
+                                        tabIndex="4"
+                                        data-color="#eee"
+                                        data-size={XS}
+                                        data-style={SLIDE_UP}
+                                        data-spinner-size={30}
+                                        data-spinner-color="#ddd"
+                                        data-spinner-lines={12}
+                                    >
+                                        ورود
+                                    </LaddaButton>
                                 </div>
                             </form>
                         </div>
