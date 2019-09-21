@@ -31,6 +31,12 @@ namespace Pishkhan.Data
         public string UserId { get; set; }
 
         public bool IsConfirm { get; set; }
+
+        public bool IsPrimary { get; set; }
+
+        public int ActivationCode { get; set; }
+
+        public DateTime ActivationCodeDate { get; set; }
     }
 
     public class AppIdentityDbContext
