@@ -18,7 +18,7 @@ namespace Pishkhan.Repositories
         public ServiceResult Create(TEntity entity)
         {
             _context.Add(entity);
-            return Save():
+            return Save();
         }
         private ServiceResult Save()
         {

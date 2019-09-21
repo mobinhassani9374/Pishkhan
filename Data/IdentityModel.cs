@@ -36,7 +36,7 @@ namespace Pishkhan.Data
 
         public int ActivationCode { get; set; }
 
-        public DateTime ActivationCodeDate { get; set; }
+        public DateTime ActivationCodeExpireDate { get; set; }
     }
 
     public class AppIdentityDbContext

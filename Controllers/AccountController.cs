@@ -103,7 +103,7 @@ namespace Pishkhan.Controllers
                     PhoneNumber = registerModel.PhoneNumber,
                     UserId = appUser.Id,
                     ActivationCode = activationCode,
-                    ActivationCodeDate = DateTime.Now
+                     ActivationCodeExpireDate = DateTime.Now
                 });
 
                 return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
