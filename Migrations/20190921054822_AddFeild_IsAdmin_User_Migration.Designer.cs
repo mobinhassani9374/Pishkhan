@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pishkhan.Data;
 
 namespace Pishkhan.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    partial class AppIdentityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190921054822_AddFeild_IsAdmin_User_Migration")]
+    partial class AddFeild_IsAdmin_User_Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,13 +197,7 @@ namespace Pishkhan.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ActivationCode");
-
-                    b.Property<DateTime>("ActivationCodeExpireDate");
-
                     b.Property<bool>("IsConfirm");
-
-                    b.Property<bool>("IsPrimary");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()

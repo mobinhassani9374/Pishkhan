@@ -34,6 +34,11 @@ namespace Pishkhan.Models
             return new ServiceResult() { IsSuccess = false, Errors = new List<string> { errorMessage } };
         }
 
+        public static ServiceResult Error()
+        {
+            return new ServiceResult() { IsSuccess = false, Errors = new List<string> { "در انجام عملیات خطایی رخ داد مجددا تلاش نمایید" } };
+        }
+
         public static ServiceResult Error(List<string> errorMessages)
         {
             return new ServiceResult() { IsSuccess = false, Errors = errorMessages };
@@ -43,6 +48,11 @@ namespace Pishkhan.Models
         {
             return new ServiceResult() { IsSuccess = true, Message = message };
         }
+
+        public static ServiceResult Okay()
+        {
+            return new ServiceResult() { IsSuccess = true, Message = "عملیات با موفقیت صورت گرفت" };
+        }
     }
 
     public class ServiceResult<T> : ServiceResult
@@ -51,7 +61,7 @@ namespace Pishkhan.Models
 
         public static ServiceResult Okay(T data)
         {
-            return new ServiceResult<T>() { IsSuccess = true, Message = "عملیات با موفقیت انجام شد",Data=data };
+            return new ServiceResult<T>() { IsSuccess = true, Message = "عملیات با موفقیت انجام شد", Data = data };
         }
     }
 
