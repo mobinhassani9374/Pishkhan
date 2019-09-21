@@ -7,21 +7,17 @@ import Cookies from 'js-cookie';
 import { ToastsStore } from 'react-toasts';
 
 export default function Verify(props) {
+
+    var timeout;
+
     useEffect(() => {
         console.log(props.location.state.phoneNumber)
-
-        setTimeout(() => {
-            setTime(time - 1)
-            if (time == 0) {
-                setFail(true)
-            }
-        }, 1000);
     })
 
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setloading] = useState(false)
     const [inputs, setInputs] = useState({})
-    const [time, setTime] = useState(props.location.state.time)
+    const [time, setTime] = useState(10)
     const [fail, setFail] = useState(false)
     const [loadingSendMessage, setLoadingSendMessage] = useState(false)
     const { t } = useTranslation(['verify'])
@@ -31,8 +27,6 @@ export default function Verify(props) {
 
         if (fail) {
             return sendMessage()
-
-
         }
 
         let headers = {
@@ -51,7 +45,11 @@ export default function Verify(props) {
             if (!response.data.isSuccess) {
                 response.data.errors.map((error) => {
                     ToastsStore.error(error)
+                    if(error==='') {
+                        setFail(true)
+                    }
                 })
+                
             }
             else {
                 localStorage.setItem('token', response.data.data);
@@ -62,17 +60,38 @@ export default function Verify(props) {
             console.log(error)
             ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
             setloading(false)
+            setFail(true)
         })
-
     }
 
     const sendMessage = () => {
         setLoadingSendMessage(true)
-        setTimeout(() => {
+        window.clearTimeout(timeout)
+
+        let headers = {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': Cookies.get('X-XSRF-TOKEN')
+        }
+
+        let dataPost = {
+            phoneNumber: props.location.state.phoneNumber
+        }
+
+        axios.post('/api/reSendActivationCode', dataPost, { headers: headers }).then((response) => {
+            if (!response.data.isSuccess) {
+                response.data.errors.map((error) => {
+                    ToastsStore.error(error)
+                })
+            }
+            else {
+                ToastsStore.success('کد مجدد فعال سازی ارسال شد ')
+            }
             setLoadingSendMessage(false)
             setFail(false)
-            setTime(60)
-        }, 2000);
+            // setTime(60)
+        }).catch((error => {
+            setLoadingSendMessage(false)
+        }))
     }
 
     const changeInputs = (event) => {
@@ -101,7 +120,7 @@ export default function Verify(props) {
                                         </div>
                                         <div className="login__box__link">
                                             <Link to="/register">{t('register')}</Link>
-                                            <span>دریافت مجدد کد امنیتی: {time} ثانیه صبر کنید</span>
+                                            {/* <span>دریافت مجدد کد امنیتی: {time} ثانیه صبر کنید</span> */}
                                             {/* <a href="#">فراموشی رمز عبور</a> */}
                                         </div>
                                         <div className="form-group">
