@@ -78,8 +78,11 @@ namespace Pishkhan.Controllers
             if (userManager.Users.Any(c => c.NationalCode.Equals(registerModel.NationalCode)))
                 return Ok(ServiceResult.Error("کد ملی متعلق به شخص دیگری است"));
 
-            if (userManager.Users.Any(c => c.PhoneNumber.Equals(registerModel.PhoneNumber)))
+            if (_userPhoneNumberRepository
+                .AsQueryable()
+                .Any(c => c.PhoneNumber.Equals(registerModel.PhoneNumber)))
                 return Ok(ServiceResult.Error("شماره همراه متعلق به شخص دیگری است"));
+
 
             var result = await userManager.CreateAsync(new AppIdentityUser
             {
@@ -103,10 +106,12 @@ namespace Pishkhan.Controllers
                     PhoneNumber = registerModel.PhoneNumber,
                     UserId = appUser.Id,
                     ActivationCode = activationCode,
-                     ActivationCodeExpireDate = DateTime.Now
+                    ActivationCodeExpireDate = DateTime.Now.AddMinutes(3)
                 });
 
-                return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
+                new SmsProvider.SmsService().Send(registerModel.PhoneNumber, $"کد فعالسازی شما : {activationCode}");
+
+                return Ok(ServiceResult.Okay("کد فعالسازی برای کاربر ارسال گردید"));
             }
 
             var errors = result.Errors.Select(c => c.Description).ToList();
