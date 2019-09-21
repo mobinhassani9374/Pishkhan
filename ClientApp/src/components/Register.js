@@ -18,7 +18,7 @@ export default function Register() {
     })
 
     const [inputs, setInputs] = useState({})
-    const [isLogin, setIsLogin] = useState(false)
+    const [verify, setverify] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
     const { t } = useTranslation(['register'])
@@ -37,7 +37,7 @@ export default function Register() {
 
         let captchaId = captcha.current.getCaptchaId()
 
-        if(inputs.password !==inputs.confirmPassword) {
+        if (inputs.password !== inputs.confirmPassword) {
             return ToastsStore.error('رمز عبور و تکرار آن مطابقت ندارد ')
         }
 
@@ -61,7 +61,7 @@ export default function Register() {
             else {
                 //localStorage.setItem('token', response.data.data);
                 ToastsStore.success('کد فعال سازی برای شما ارسال شد ')
-                setIsLogin(true)
+                setverify(true)
             }
             setLoading(false)
         }).catch((error) => {
@@ -78,7 +78,10 @@ export default function Register() {
     return (
         <div className="login">
             {
-                isLogin ? <Redirect to="/login" />
+                verify ? <Redirect to={{
+                    pathname: '/verify',
+                    state: { phoneNumber:inputs.phoneNumber }
+                }} />
                     : <div className="col-md-4 col-sm-6 col-xs-12">
                         <div className="login__box">
                             <form onSubmit={handleSubmit}>
