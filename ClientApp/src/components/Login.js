@@ -21,6 +21,7 @@ export default function Login() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
+    const { t } = useTranslation(['home']);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -82,24 +83,24 @@ export default function Login() {
                                         <i className="fa fa-sign-in"></i>
                                     </div>
                                 </div>
-                                <div className="login__box__title">ورود به سایت</div>
+                                <div className="login__box__title">{t('login')}</div>
                                 <div className="form-group">
-                                    <label>نام کاربری را وارد کنید </label>
-                                    <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder="نام کاربری" />
+                                    <label>{t('username')} </label>
+                                    <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder={t('username')} />
                                 </div>
                                 <div className="form-group">
-                                    <label>رمز عبور را وارد کنید </label>
-                                    <input autoComplete="false" type="password" name="password" onChange={changeInputs} required tabIndex="2" className="form-control" placeholder="رمز عبور" />
+                                    <label>{t('password')}</label>
+                                    <input autoComplete="false" type="password" name="password" onChange={changeInputs} required tabIndex="2" className="form-control" placeholder={t('password')} />
                                 </div>
                                 <div className="form-group">
                                     <Captcha captchaStyleName="loginCaptchaStyle"
                                         ref={captcha} />
-                                    <label name="cap">کد امنیتی را وارد کنید </label>
-                                    <input id="loginCaptchaUserInput" required tabIndex="3" placeholder="کد امنیتی" className="form-control" type="text" />
+                                    <label name="cap">{t('security code')}</label>
+                                    <input id="loginCaptchaUserInput" required tabIndex="3" placeholder={t('security code')} className="form-control" type="text" />
                                 </div>
                                 <div className="login__box__link">
-                                    <Link to="/register">ثبت نام</Link>
-                                    <Link to="/register">فراموشی رمز عبور</Link>
+                                    <Link to="/register">{t('register')}</Link>
+                                    <Link to="/register">{t('forgot password')}</Link>
                                     {/* <a href="#">فراموشی رمز عبور</a> */}
                                 </div>
                                 <div className="form-group">
@@ -113,7 +114,7 @@ export default function Login() {
                                         data-spinner-color="#ddd"
                                         data-spinner-lines={12}
                                     >
-                                        ورود
+                                        {t('login')}
                                     </LaddaButton>
                                 </div>
                             </form>
