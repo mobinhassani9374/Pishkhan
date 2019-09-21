@@ -33,7 +33,7 @@ namespace Pishkhan.Controllers
         [Route("api/login")]
         public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
         {
-         
+
             if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
 
             // create a captcha instance to be used for the captcha validation
@@ -80,14 +80,15 @@ namespace Pishkhan.Controllers
             var result = await userManager.CreateAsync(new AppIdentityUser
             {
                 NationalCode = registerModel.NationalCode,
-                UserName = registerModel.NationalCode,
-                PhoneNumber = registerModel.PhoneNumber,
+                UserName = registerModel.UserName,
+                IsAdmin = false
 
             }, registerModel.Password);
 
 
             if (result.Succeeded)
             {
+
                 var appUser = await userManager.FindByNameAsync(registerModel.NationalCode);
 
                 return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
