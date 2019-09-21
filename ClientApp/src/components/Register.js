@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ToastsStore } from 'react-toasts';
 import LaddaButton, { XS, SLIDE_UP } from 'react-ladda';
 import { useTranslation } from 'react-i18next';
+import Cookies from 'js-cookie';
 
 export default function Register() {
 
@@ -55,7 +56,7 @@ export default function Register() {
 
         let headers = {
             'Content-Type': 'application/json',
-            'X-XSRF-TOKEN': 'X-XSRF-TOKEN'
+            'X-XSRF-TOKEN': Cookies.get('X-XSRF-TOKEN')
         }
 
         axios.post('/api/register' , dataPost ,  {
