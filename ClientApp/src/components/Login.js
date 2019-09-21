@@ -40,7 +40,12 @@ export default function Login() {
 
         setLoading(true)
 
-        axios.post('/api/login', dataPost).then((response) => {
+        let headers = {
+            'Content-Type': 'application/json',
+            'X-XSRF-TOKEN': 'X-XSRF-TOKEN'
+        }
+
+        axios.post('/api/login', headers ,  dataPost).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
                 response.data.errors.map((error) => {
