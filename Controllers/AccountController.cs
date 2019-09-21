@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Pishkhan.Data;
 using Pishkhan.Models;
+using Pishkhan.Repositories;
 
 namespace Pishkhan.Controllers
 {
@@ -21,13 +22,16 @@ namespace Pishkhan.Controllers
         private readonly SignInManager<AppIdentityUser> signInManager;
         private readonly UserManager<AppIdentityUser> userManager;
         private readonly JwtConfigModel jwtTokenModel;
+        private readonly UserPhoneNumberRepository _userPhoneNumberRepository;
         public AccountController(SignInManager<AppIdentityUser> signInManager,
             UserManager<AppIdentityUser> userManager,
-            IOptions<JwtConfigModel> options)
+            IOptions<JwtConfigModel> options,
+            UserPhoneNumberRepository userPhoneNumberRepository)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             jwtTokenModel = options.Value;
+            _userPhoneNumberRepository = userPhoneNumberRepository;
         }
         [HttpPost]
         [Route("api/login")]
@@ -88,8 +92,19 @@ namespace Pishkhan.Controllers
 
             if (result.Succeeded)
             {
-
                 var appUser = await userManager.FindByNameAsync(registerModel.NationalCode);
+
+                var activationCode = new Random().Next(1000, 9999);
+
+                _userPhoneNumberRepository.Create(new UserPhoneNumber
+                {
+                    IsConfirm = false,
+                    IsPrimary = true,
+                    PhoneNumber = registerModel.PhoneNumber,
+                    UserId = appUser.Id,
+                    ActivationCode = activationCode,
+                    ActivationCodeDate = DateTime.Now
+                });
 
                 return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
             }
