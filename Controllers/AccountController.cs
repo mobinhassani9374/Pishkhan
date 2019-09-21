@@ -37,7 +37,6 @@ namespace Pishkhan.Controllers
         [Route("api/login")]
         public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
         {
-
             if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
 
             // create a captcha instance to be used for the captcha validation
@@ -47,6 +46,8 @@ namespace Pishkhan.Controllers
 
             if (isHuman == false)
                 return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
+
+            var d = userManager.PasswordHasher.HashPassword(new AppIdentityUser { }, "Mobin@123");
 
             var result = await signInManager.PasswordSignInAsync(loginModel.UserName, loginModel.Password, false, false);
 
@@ -95,7 +96,7 @@ namespace Pishkhan.Controllers
 
             if (result.Succeeded)
             {
-                var appUser = await userManager.FindByNameAsync(registerModel.NationalCode);
+                var appUser = await userManager.FindByNameAsync(registerModel.UserName);
 
                 var activationCode = new Random().Next(1000, 9999);
 
