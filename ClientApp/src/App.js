@@ -7,11 +7,14 @@ import Register from './components/Register';
 import PrivateRouter from './components/PrivateRouter';
 import PublicRouter from './components/PublicRouter';
 import './locale.js';
+import { useTranslation } from 'react-i18next';
 
-export default () => (
-  <Layout>
-    <PrivateRouter exact path='/' component={Home} />
-    <PublicRouter exact path='/Login' component={Login} />
-    <PublicRouter exact path='/Register' component={Register} />
-  </Layout>
-);
+export default function App() {
+  return (
+    <Layout>
+      <PrivateRouter exact path='/' component={Home} />
+      <PublicRouter exact path='/Login' component={Login} />
+      <PublicRouter exact path='/Register' component={Register} />
+    </Layout>
+  )
+}

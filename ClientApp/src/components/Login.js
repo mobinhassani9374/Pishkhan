@@ -21,7 +21,7 @@ export default function Login() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
-    const { t } = useTranslation(['home']);
+    const { t } = useTranslation(['login']);
 
     const handleSubmit = (event) => {
         event.preventDefault();

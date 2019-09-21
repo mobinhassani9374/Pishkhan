@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Link, Redirect } from 'react-router-dom';
 import { Captcha, captchaSettings } from 'reactjs-captcha';
 import axios from 'axios';
-import {ToastsStore} from 'react-toasts';
+import { ToastsStore } from 'react-toasts';
 import LaddaButton, { XS, SLIDE_UP } from 'react-ladda';
+import { useTranslation } from 'react-i18next';
 
 export default function Register() {
 
@@ -20,6 +21,7 @@ export default function Register() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
+    const { t } = useTranslation(['register']);
 
     const settingCaptcha = () => {
         captchaSettings.set({
@@ -46,7 +48,7 @@ export default function Register() {
         axios.post('/api/register', dataPost).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
-                response.data.errors.map((error) => {                
+                response.data.errors.map((error) => {
                     ToastsStore.error(error)
                 })
                 captcha.current.reloadImage();
@@ -79,34 +81,34 @@ export default function Register() {
                                         <i className="fa fa-user"></i>
                                     </div>
                                 </div>
-                                <div className="login__box__title">ثبت نام در سایت </div>
+                                <div className="login__box__title">{t('register')}</div>
                                 <div className="form-group">
-                                    <label>کد ملی  را وارد کنید </label>
-                                    <input type="text" tabIndex="1" name="nationalCode" onChange={changeInputs} required className="form-control" placeholder="کد ملی " />
+                                    <label>{t('national code')}</label>
+                                    <input type="text" tabIndex="1" name="nationalCode" onChange={changeInputs} required className="form-control" placeholder={t('national code')} />
                                 </div>
                                 <div className="form-group">
-                                    <label>شماره همراه را وارد کنید </label>
-                                    <input type="text" tabIndex="2" name="phoneNumber" onChange={changeInputs} required className="form-control" placeholder="شماره همراه" />
+                                    <label>{t('phone number')}</label>
+                                    <input type="text" tabIndex="2" name="phoneNumber" onChange={changeInputs} required className="form-control" placeholder={t('phone number')} />
                                 </div>
                                 <div className="form-group">
-                                    <label>رمز عبور را وارد کنید </label>
-                                    <input type="password" name="password" onChange={changeInputs} required tabIndex="3" className="form-control" placeholder="رمز عبور" />
+                                    <label>{t('password')}</label>
+                                    <input type="password" name="password" onChange={changeInputs} required tabIndex="3" className="form-control" placeholder={t('password')} />
                                 </div>
                                 <div className="form-group">
-                                    <label>تکرار رمز عبور را وارد کنید </label>
-                                    <input type="password" name="confirmPassword" onChange={changeInputs} required tabIndex="4" className="form-control" placeholder="تکرار رمز عبور" />
+                                    <label>{t('confirm password')}</label>
+                                    <input type="password" name="confirmPassword" onChange={changeInputs} required tabIndex="4" className="form-control" placeholder={t('confirm password')} />
                                 </div>
                                 <div className="form-group">
                                     <Captcha captchaStyleName="registerCaptchaStyle"
                                         ref={captcha} />
-                                    <label name="cap">کد امنیتی را وارد کنید </label>
-                                    <input id="registerCaptchaUserInput" tabIndex="5" placeholder="کد امنیتی" className="form-control" type="text" />
+                                    <label name="cap">{t('security code')}</label>
+                                    <input id="registerCaptchaUserInput" tabIndex="5" placeholder={t('security code')} required className="form-control" type="text" />
                                 </div>
                                 <div className="login__box__link">
-                                    <Link to="/login">ورود به سایت </Link>
+                                    <Link to="/login">{t('login')}</Link>
                                 </div>
                                 <div className="form-group">
-                                <LaddaButton
+                                    <LaddaButton
                                         loading={loading}
                                         tabIndex="6"
                                         data-color="#eee"
@@ -116,7 +118,7 @@ export default function Register() {
                                         data-spinner-color="#ddd"
                                         data-spinner-lines={12}
                                     >
-                                        ثبت نام
+                                        {t('register')}
                                     </LaddaButton>
                                 </div>
                             </form>
