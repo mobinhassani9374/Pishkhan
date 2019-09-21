@@ -161,7 +161,7 @@ namespace Pishkhan.Controllers
             if (entity.ActivationCode != verificationModel.ActivationCode)
                 return Ok(ServiceResult.Error("کد فعالسازی معتبر نمی باشد"));
 
-            if (entity.ActivationCodeExpireDate <= DateTime.Now)
+            if (entity.ActivationCodeExpireDate >= DateTime.Now)
             {
                 entity.IsConfirm = true;
 
