@@ -59,7 +59,8 @@ export default function Register() {
                 captcha.current.reloadImage();
             }
             else {
-                localStorage.setItem('token', response.data.data);
+                //localStorage.setItem('token', response.data.data);
+                ToastsStore.success('کد فعال سازی برای شما ارسال شد ')
                 setIsLogin(true)
             }
             setLoading(false)
@@ -77,7 +78,7 @@ export default function Register() {
     return (
         <div className="login">
             {
-                isLogin ? <Redirect to="/" />
+                isLogin ? <Redirect to="/login" />
                     : <div className="col-md-4 col-sm-6 col-xs-12">
                         <div className="login__box">
                             <form onSubmit={handleSubmit}>

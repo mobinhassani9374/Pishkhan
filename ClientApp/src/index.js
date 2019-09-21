@@ -10,6 +10,8 @@ import configureStore from './store/configureStore';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { ToastsContainer, ToastsStore } from 'react-toasts';
+import {I18nextProvider} from 'react-i18next'
+import i18n from './locale.js';
 
 // Create browser history to use in the Redux store
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
@@ -22,6 +24,7 @@ const store = configureStore(history, initialState);
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
+  //<I18nextProvider></I18nextProvider>
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <div>
