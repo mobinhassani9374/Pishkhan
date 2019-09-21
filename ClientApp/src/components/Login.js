@@ -22,8 +22,7 @@ export default function Login() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
-    const { t , i18n} = useTranslation(['login']);
-    //i18n.changeLanguage('fa_IR');
+    const { t } = useTranslation(['login']);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -65,6 +64,7 @@ export default function Login() {
             console.log(error)
             ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
             setLoading(false)
+            captcha.current.reloadImage();
         })
     }
 
