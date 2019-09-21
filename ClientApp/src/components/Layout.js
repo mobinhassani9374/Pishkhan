@@ -30,12 +30,12 @@ export default function Layout(props) {
 
   return (
     <div dir={t('ltr')}>
-      <div>
+      {/* <div>
           <select value={lang} onChange={changeLang}>
             <option value="en">انگلیسی</option>
             <option value="fa">فارسی</option>
           </select>
-      </div>
+      </div> */}
       {props.children}
     </div>
   )
