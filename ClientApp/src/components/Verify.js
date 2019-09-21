@@ -6,11 +6,16 @@ import { Link, Redirect } from 'react-router-dom';
 export default function Verify(props) {
     useEffect(() => {
         console.log(props.location.state.phoneNumber)
+
+        setTimeout(() => {
+            setTime(time-1)
+        }, 1000);
     })
 
     const [isLogin , setIsLogin] = useState(false)
     const [loading , setloading] = useState(false)
     const [inputs, setInputs] = useState({})
+    const [time, setTime] = useState(180)
 
     const { t } = useTranslation(['verify']);
 
@@ -42,6 +47,7 @@ export default function Verify(props) {
                                 </div> 
                                 <div className="login__box__link">
                                     <Link to="/register">{t('register')}</Link>
+                                    <span>دریافت مجدد کد امنیتی: {time} ثانیه صبر کنید</span>
                                     {/* <a href="#">فراموشی رمز عبور</a> */}
                                 </div>
                                 <div className="form-group">
