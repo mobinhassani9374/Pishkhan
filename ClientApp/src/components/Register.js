@@ -21,6 +21,7 @@ export default function Register() {
     const [inputs, setInputs] = useState({})
     const [verify, setverify] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [time,setTime] = useState(0)
     const captcha = useRef();
     const { t } = useTranslation(['register'])
 
@@ -72,6 +73,7 @@ export default function Register() {
             else {
                 //localStorage.setItem('token', response.data.data);
                 ToastsStore.success('کد فعال سازی برای شما ارسال شد ')
+                setTime(response.data.data*60)
                 setverify(true)
             }
             setLoading(false)
@@ -92,7 +94,7 @@ export default function Register() {
             {
                 verify ? <Redirect to={{
                     pathname: '/verify',
-                    state: { phoneNumber:inputs.phoneNumber }
+                    state: { phoneNumber:inputs.phoneNumber , time },
                 }} />
                     : <div className="col-md-4 col-sm-6 col-xs-12">
                         <div className="login__box">
