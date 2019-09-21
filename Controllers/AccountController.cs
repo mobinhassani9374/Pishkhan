@@ -142,6 +142,15 @@ namespace Pishkhan.Controllers
         }
 
 
+        [HttpPost]
+        [Route("api/verify")]
+        [ValidateAntiForgeryToken()]
+        public IActionResult Verify()
+        {
+            return Ok();
+        }
+
+
         private string GenerateJwtToken(IdentityUser user)
         {
             var claims = new List<Claim>
