@@ -78,6 +78,7 @@ export default function Register() {
         }).catch((error) => {
             ToastsStore.error('در برقراری با سرور به مشکل خوردیم دوباره تلاش کنیم')
             setLoading(false)
+            captcha.current.reloadImage();
         })
     }
 

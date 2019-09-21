@@ -11,12 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function App() {
 
-  const { i18n } = useTranslation(['home']); 
   
-
-  useEffect(() => {
-    i18n.changeLanguage('fa_IR');
-  },[i18n])
 
   return (
     <Layout>
