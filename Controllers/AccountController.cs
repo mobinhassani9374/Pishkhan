@@ -7,8 +7,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using BotDetect.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Pishkhan.Data;
@@ -47,18 +49,24 @@ namespace Pishkhan.Controllers
             if (isHuman == false)
                 return Ok(ServiceResult.Error("کد امنیتی اشتباه است"));
 
-            var d = userManager.PasswordHasher.HashPassword(new AppIdentityUser { }, "Mobin@123");
+            var appUser = userManager.Users.Include(c=>c.PhoneNumbers).FirstOrDefault(c => c.UserName.Equals(loginModel.UserName)
+              || c.NationalCode.Equals(loginModel.UserName)
+              || c.PhoneNumbers.Any(i => i.PhoneNumber.Equals(loginModel.UserName)));
 
-            var result = await signInManager.PasswordSignInAsync(loginModel.UserName, loginModel.Password, false, false);
+            if (appUser == null) return Ok(ServiceResult.Error("کاربری یافت نشد"));
 
-            if (result.Succeeded)
-            {
-                var appUser = await userManager.FindByNameAsync(loginModel.UserName);
 
-                return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
-            }
+            var verifyPass = userManager.PasswordHasher
+                .VerifyHashedPassword(appUser, appUser.PasswordHash, loginModel.Password);
 
-            return Ok(ServiceResult.Error("کاربری یافت نشد"));
+            // policy
+            //appUser.PhoneNumbers.Any(c=>c.IsPrimary && c.IsConfirm)
+
+            if (verifyPass == PasswordVerificationResult.Failed) return Ok(ServiceResult.Error("کاربری یافت نشد"));
+
+            await signInManager.SignInAsync(appUser, true, JwtBearerDefaults.AuthenticationScheme);
+
+            return Ok(ServiceResult<string>.Okay(GenerateJwtToken(appUser)));
         }
 
         [HttpPost]
