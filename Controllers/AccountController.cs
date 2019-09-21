@@ -113,18 +113,6 @@ namespace Pishkhan.Controllers
 
                 var activationCode = new Random().Next(1000, 9999);
 
-                _userPhoneNumberRepository.Create(new UserPhoneNumber
-                {
-                    IsConfirm = false,
-                    IsPrimary = true,
-                    PhoneNumber = registerModel.PhoneNumber,
-                    UserId = appUser.Id,
-                    ActivationCode = activationCode,
-                    ActivationCodeExpireDate = DateTime.Now.AddMinutes(3)
-                });
-
-                new SmsProvider.SmsService().Send(registerModel.PhoneNumber, $"کد فعالسازی شما : {activationCode}");
-
                 var verificationTime = _settingRepository.AsQueryable()
                     .FirstOrDefault(c => c.Key.Equals(Enums.Setting.VerificationTime.ToString()));
 
@@ -132,6 +120,18 @@ namespace Pishkhan.Controllers
 
                 if (verificationTime != null)
                     verificationTimeMin = Convert.ToInt32(verificationTime.Value);
+
+                _userPhoneNumberRepository.Create(new UserPhoneNumber
+                {
+                    IsConfirm = false,
+                    IsPrimary = true,
+                    PhoneNumber = registerModel.PhoneNumber,
+                    UserId = appUser.Id,
+                    ActivationCode = activationCode,
+                    ActivationCodeExpireDate = DateTime.Now.AddMinutes(verificationTimeMin)
+                });
+
+                new SmsProvider.SmsService().Send(registerModel.PhoneNumber, $"کد فعالسازی شما : {activationCode}");
 
                 return Ok(ServiceResult<int>.Okay(verificationTimeMin));
             }
