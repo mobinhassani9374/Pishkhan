@@ -109,6 +109,8 @@ namespace Pishkhan.Controllers
                     ActivationCodeExpireDate = DateTime.Now.AddMinutes(3)
                 });
 
+                new SmsProvider.SmsService().Send(registerModel.PhoneNumber, $"کد فعالسازی شما : {activationCode}");
+
                 return Ok(ServiceResult.Okay("کد فعالسازی برای کاربر ارسال گردید"));
             }
 
