@@ -21,7 +21,7 @@ export default function Register() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
-    const { t } = useTranslation(['register']);
+    const { t } = useTranslation(['register'])
 
     const settingCaptcha = () => {
         captchaSettings.set({
