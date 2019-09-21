@@ -45,7 +45,9 @@ export default function Login() {
             'X-XSRF-TOKEN': 'X-XSRF-TOKEN'
         }
 
-        axios.post('/api/login', headers ,  dataPost).then((response) => {
+        axios.post('/api/login',  dataPost , {
+            headers: headers
+          }).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
                 response.data.errors.map((error) => {

@@ -58,7 +58,9 @@ export default function Register() {
             'X-XSRF-TOKEN': 'X-XSRF-TOKEN'
         }
 
-        axios.post('/api/register', headers , dataPost).then((response) => {
+        axios.post('/api/register' , dataPost ,  {
+            headers: headers
+          }).then((response) => {
             console.log(response)
             if (!response.data.isSuccess) {
                 response.data.errors.map((error) => {
