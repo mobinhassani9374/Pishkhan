@@ -21,6 +21,12 @@ namespace Pishkhan.Repositories
             return Save();
         }
 
+        public ServiceResult Update(TEntity entity)
+        {
+            _context.Update(entity);
+            return Save();
+        }
+
         public IQueryable<TEntity> AsQueryable()
         {
             return _context.Set<TEntity>().AsQueryable();

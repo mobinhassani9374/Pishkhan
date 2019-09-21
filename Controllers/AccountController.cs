@@ -141,7 +141,74 @@ namespace Pishkhan.Controllers
             return Ok(ServiceResult.Error(errors));
         }
 
+        [HttpPost]
+        [Route("api/verify")]
+        [ValidateAntiForgeryToken()]
+        public IActionResult Verify([FromBody]VerificationModel verificationModel)
+        {
+            if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
 
+            var entity = _userPhoneNumberRepository
+                  .AsQueryable()
+                  .Include(c => c.User)
+                  .FirstOrDefault(c => c.PhoneNumber.Equals(verificationModel.PhoneNumber));
+
+            if (entity == null) return Ok(ServiceResult.Error("شماره همراه وارد شده در پایگاه داده موجود نمی باشد"));
+
+            if (entity.IsConfirm)
+                return Ok(ServiceResult.Error("شماره همراه مورد نظر قبلا فعال شده است"));
+
+            if (entity.ActivationCode != verificationModel.ActivationCode)
+                return Ok(ServiceResult.Error("کد فعالسازی معتبر نمی باشد"));
+
+            if (entity.ActivationCodeExpireDate <= DateTime.Now)
+            {
+                entity.IsConfirm = true;
+
+                var updateResult = _userPhoneNumberRepository.Update(entity);
+
+                if (updateResult.IsSuccess)
+                    return Ok(ServiceResult<string>.Okay(GenerateJwtToken(entity.User)));
+
+                return Ok(ServiceResult.Error());
+            }
+            else return Ok(ServiceResult.Error("کد فعالسازی منقضی شده است"));
+
+        }
+
+        [HttpPost]
+        [Route("api/reSendActivationCode")]
+        [ValidateAntiForgeryToken()]
+        public IActionResult ReSendActivationCode([FromBody]ReSendActivationCodeModel reSendActivationCodeModel)
+        {
+            if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
+
+            var entity = _userPhoneNumberRepository
+                  .AsQueryable()
+                  .FirstOrDefault(c => c.PhoneNumber.Equals(reSendActivationCodeModel.PhoneNumber));
+
+            if (entity == null) return Ok(ServiceResult.Error("شماره همراه وارد شده در پایگاه داده موجود نمی باشد"));
+
+            if (entity.IsConfirm) return Ok(ServiceResult.Error("شماره همراه قبلا فعال شده است"));
+
+            var verificationTime = _settingRepository.AsQueryable()
+                    .FirstOrDefault(c => c.Key.Equals(Enums.Setting.VerificationTime.ToString()));
+
+            int verificationTimeMin = 3;
+
+            if (verificationTime != null)
+                verificationTimeMin = Convert.ToInt32(verificationTime.Value);
+
+            entity.ActivationCode = new Random().Next(1000, 9999);
+            entity.ActivationCodeExpireDate = DateTime.Now.AddMinutes(verificationTimeMin);
+
+            var updateResult = _userPhoneNumberRepository.Update(entity);
+
+            if (updateResult.IsSuccess)
+                return Ok(ServiceResult<int>.Okay(verificationTimeMin));
+
+            return Ok(ServiceResult.Error());
+        }
         private string GenerateJwtToken(IdentityUser user)
         {
             var claims = new List<Claim>
