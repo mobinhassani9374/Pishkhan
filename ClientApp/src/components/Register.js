@@ -37,6 +37,10 @@ export default function Register() {
 
         let captchaId = captcha.current.getCaptchaId()
 
+        if(inputs.password !==inputs.confirmPassword) {
+            return ToastsStore.error('رمز عبور و تکرار آن مطابقت ندارد ')
+        }
+
         var dataPost = {
             userEnteredCaptchaCode,
             captchaId,
@@ -44,6 +48,7 @@ export default function Register() {
             password: inputs.password,
             confirmPassword: inputs.confirmPassword,
             phoneNumber: inputs.phoneNumber,
+            username: inputs.username,
         }
         axios.post('/api/register', dataPost).then((response) => {
             console.log(response)
@@ -91,18 +96,22 @@ export default function Register() {
                                     <input type="text" tabIndex="2" name="phoneNumber" onChange={changeInputs} required className="form-control" placeholder={t('phone number')} />
                                 </div>
                                 <div className="form-group">
+                                    <label>{t('username')}</label>
+                                    <input type="text" tabIndex="3" name="userName" onChange={changeInputs} required className="form-control" placeholder={t('username')} />
+                                </div>
+                                <div className="form-group">
                                     <label>{t('password')}</label>
-                                    <input type="password" name="password" onChange={changeInputs} required tabIndex="3" className="form-control" placeholder={t('password')} />
+                                    <input type="password" name="password" onChange={changeInputs} required tabIndex="4" className="form-control" placeholder={t('password')} />
                                 </div>
                                 <div className="form-group">
                                     <label>{t('confirm password')}</label>
-                                    <input type="password" name="confirmPassword" onChange={changeInputs} required tabIndex="4" className="form-control" placeholder={t('confirm password')} />
+                                    <input type="password" name="confirmPassword" onChange={changeInputs} required tabIndex="5" className="form-control" placeholder={t('confirm password')} />
                                 </div>
                                 <div className="form-group">
                                     <Captcha captchaStyleName="registerCaptchaStyle"
                                         ref={captcha} />
                                     <label name="cap">{t('security code')}</label>
-                                    <input id="registerCaptchaUserInput" tabIndex="5" placeholder={t('security code')} required className="form-control" type="text" />
+                                    <input id="registerCaptchaUserInput" tabIndex="6" placeholder={t('security code')} required className="form-control" type="text" />
                                 </div>
                                 <div className="login__box__link">
                                     <Link to="/login">{t('login')}</Link>
@@ -110,7 +119,7 @@ export default function Register() {
                                 <div className="form-group">
                                     <LaddaButton
                                         loading={loading}
-                                        tabIndex="6"
+                                        tabIndex="7"
                                         data-color="#eee"
                                         data-size={XS}
                                         data-style={SLIDE_UP}
