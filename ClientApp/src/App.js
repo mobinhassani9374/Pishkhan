@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRouter from './components/PrivateRouter';
 import PublicRouter from './components/PublicRouter';
+import './locale.js';
 
 export default () => (
   <Layout>

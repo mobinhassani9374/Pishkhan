@@ -4,6 +4,7 @@ import { Captcha, captchaSettings } from 'reactjs-captcha';
 import axios from 'axios';
 import { ToastsStore } from 'react-toasts';
 import LaddaButton, { XS, SLIDE_UP } from 'react-ladda';
+import { useTranslation } from 'react-i18next';
 
 export default function Login() {
 
@@ -81,7 +82,7 @@ export default function Login() {
                                         <i className="fa fa-sign-in"></i>
                                     </div>
                                 </div>
-                                <div className="login__box__title">ورود به سایت </div>
+                                <div className="login__box__title">ورود به سایت</div>
                                 <div className="form-group">
                                     <label>نام کاربری را وارد کنید </label>
                                     <input type="text" name="userName" required onChange={changeInputs} tabIndex="1" className="form-control" placeholder="نام کاربری" />
