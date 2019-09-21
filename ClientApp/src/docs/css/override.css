@@ -36,24 +36,30 @@ body {
     font-size: 10px;
 }
 
-.btn-success.focus, .btn-success:focus , .btn-success.active.focus,
- .btn-success.active:focus, .btn-success.active:hover, .btn-success:active.focus, 
- .btn-success:active:focus, .btn-success:active:hover, .open>.dropdown-toggle.btn-success.focus, 
- .open>.dropdown-toggle.btn-success:focus,
- .open>.dropdown-toggle.btn-success:hover {
+.btn-success.focus,
+.btn-success:focus,
+.btn-success.active.focus,
+.btn-success.active:focus,
+.btn-success.active:hover,
+.btn-success:active.focus,
+.btn-success:active:focus,
+.btn-success:active:hover,
+.open>.dropdown-toggle.btn-success.focus,
+.open>.dropdown-toggle.btn-success:focus,
+.open>.dropdown-toggle.btn-success:hover {
     color: #fff;
     background-color: #62cb31;
     border-color: #62cb31;
 }
 
-.form-group > lable {
+.form-group>lable {
     font-weight: 600;
     font-size: 10px;
 }
 
-.toast  {
-    left:10px !important;
-    font-family: IRANSans !important; 
+.toast {
+    left: 10px !important;
+    font-family: IRANSans !important;
     color: #fff !important;
 }
 
@@ -61,15 +67,25 @@ body {
     direction: ltr;
 }
 
-.ladda-button[disabled], .ladda-button[disabled]:hover, .ladda-button[data-loading], .ladda-button[data-loading]:hover {
+.ladda-button[disabled],
+.ladda-button[disabled]:hover,
+.ladda-button[data-loading],
+.ladda-button[data-loading]:hover {
     color: #fff;
     background-color: #62cb31 !important;
     border-color: #62cb31 !important;
 }
 
-.ladda-button[data-size=xs] , .ladda-button[data-size=xs]:hover {
+.ladda-button[data-size=xs],
+.ladda-button[data-size=xs]:hover {
     width: 100%;
     color: #fff;
     background-color: #62cb31;
     border-color: #62cb31;
+}
+
+.login {
+    min-height: 100vh;
+    margin: 10px 0;
+    height: auto;
 }
