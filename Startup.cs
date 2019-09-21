@@ -1,4 +1,5 @@
 using BotDetect.Web;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -87,7 +88,7 @@ namespace Pishkhan
                 options.Cookie.HttpOnly = true;
             });
 
-            services.AddAntiforgery(options => 
+            services.AddAntiforgery(options =>
             {
                 options.HeaderName = "X-XSRF-TOKEN";
                 options.Cookie.Name = "MyAntiForgeryCookieName";
@@ -103,7 +104,7 @@ namespace Pishkhan
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IAntiforgery antiforgery)
         {
             if (env.IsDevelopment())
             {
@@ -130,7 +131,15 @@ namespace Pishkhan
 
             //app.UseCaptcha(Configuration.GetSection("BotDetect"));
 
+            app.Use(async (context, next) =>
+            {
+                var tokens = antiforgery.GetAndStoreTokens(context);
 
+                context.Response.Cookies.Append("X-XSRF-TOKEN", tokens.RequestToken, new CookieOptions { HttpOnly = false });
+              
+                // Call the next delegate/middleware in the pipeline
+                await next();
+            });
 
             app.UseMvc(routes =>
             {
