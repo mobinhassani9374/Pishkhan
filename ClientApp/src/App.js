@@ -13,9 +13,9 @@ export default function App() {
 
   const { i18n } = useTranslation(['home']); 
 
-  useEffect(() => {
-    i18n.changeLanguage('fa_IR');
-  })
+  // useEffect(() => {
+  //   i18n.changeLanguage('fa_IR');
+  // })
 
   return (
     <Layout>
