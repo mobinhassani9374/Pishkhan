@@ -39,6 +39,15 @@ namespace Pishkhan.Data
         public DateTime ActivationCodeExpireDate { get; set; }
     }
 
+    public class Setting
+    {
+        public int Id { get; set; }
+
+        public string Key { get; set; }
+
+        public string Value { get; set; }
+    }
+
     public class AppIdentityDbContext
       : IdentityDbContext<AppIdentityUser, AppIdentityRole, string>
     {
@@ -49,6 +58,8 @@ namespace Pishkhan.Data
         }
 
         public DbSet<UserPhoneNumber> UserPhoneNumbers { get; set; }
+
+        public DbSet<Setting> Setting { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -82,6 +93,11 @@ namespace Pishkhan.Data
                 .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            //setting
+            var setting = builder.Entity<Setting>();
+
+            setting.Property(c => c.Key).HasMaxLength(250).IsRequired();
+            setting.Property(c => c.Value).HasMaxLength(250).IsRequired();
         }
     }
 }
