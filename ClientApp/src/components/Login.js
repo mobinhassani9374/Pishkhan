@@ -21,7 +21,8 @@ export default function Login() {
     const [isLogin, setIsLogin] = useState(false)
     const [loading, setLoading] = useState(false)
     const captcha = useRef();
-    const { t } = useTranslation(['login']);
+    const { t , i18n} = useTranslation(['login']);
+    //i18n.changeLanguage('fa_IR');
 
     const handleSubmit = (event) => {
         event.preventDefault();

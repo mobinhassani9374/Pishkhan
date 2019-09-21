@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import PrivateRouter from './components/PrivateRouter';
 import PublicRouter from './components/PublicRouter';
+import { useTranslation } from 'react-i18next';
 
 export default function App() {
   return (

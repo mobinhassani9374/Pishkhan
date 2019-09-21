@@ -10,8 +10,7 @@ import { useTranslation } from 'react-i18next';
 
 
 export default function Layout(props) {
-  const { t , i18n } = useTranslation(['home']);
-  //i18n.changeLanguage('fa_IR');
+  const { t  } = useTranslation(['home']);
 
   return (
     <div dir={t('ltr')}>{props.children}</div>
