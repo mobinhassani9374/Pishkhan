@@ -145,9 +145,36 @@ namespace Pishkhan.Controllers
         [HttpPost]
         [Route("api/verify")]
         [ValidateAntiForgeryToken()]
-        public IActionResult Verify()
+        public IActionResult Verify([FromBody]VerificationModel verificationModel)
         {
-            return Ok();
+            if (!ModelState.IsValid) return Ok(ServiceResult.Error(ModelState));
+
+            var entity = _userPhoneNumberRepository
+                  .AsQueryable()
+                  .Include(c => c.User)
+                  .FirstOrDefault(c => c.PhoneNumber.Equals(verificationModel.PhoneNumber));
+
+            if (entity == null) return Ok(ServiceResult.Error("شماره همراه وارد شده در پایگاه داده موجود نمی باشد"));
+
+            if (entity.IsConfirm)
+                return Ok(ServiceResult.Error("شماره همراه مورد نظر قبلا فعال شده است"));
+
+            if (entity.ActivationCode != verificationModel.ActivationCode)
+                return Ok(ServiceResult.Error("کد فعالسازی معتبر نمی باشد"));
+
+            if (entity.ActivationCodeExpireDate <= DateTime.Now)
+            {
+                entity.IsConfirm = true;
+
+                var updateResult = _userPhoneNumberRepository.Update(entity);
+
+                if (updateResult.IsSuccess)
+                    return Ok(ServiceResult<string>.Okay(GenerateJwtToken(entity.User)));
+
+                return Ok(ServiceResult.Error());
+            }
+            else return Ok(ServiceResult.Error("کد فعالسازی منقضی شده است"));
+
         }
 
 
